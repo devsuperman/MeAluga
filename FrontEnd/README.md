@@ -1,4 +1,4 @@
-# vuetiago
+# mealuga
 
 ## Project setup
 ```
