@@ -26,11 +26,10 @@ namespace MeAluga.Models
         public string Observacao { get; set; }
 
 
-        public virtual Pessoa Locatario {get;set;}
-        
-        public virtual Imovel Imovel {get;set;}
-        public virtual ICollection<Aluguel> Alugueis {get;set;}
-        public virtual Garantia Garantia {get;set;}
+        public Locatario Locatario {get;set;}        
+        public Imovel Imovel {get;set;}
+        public Garantia Garantia {get;set;}
+        public ICollection<Aluguel> Alugueis {get;set;} = new List<Aluguel>();
         //TODO:  public ISituacaoDeContrato Situacao {get;set;}
 
     }

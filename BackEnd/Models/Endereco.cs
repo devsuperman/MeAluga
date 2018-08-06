@@ -5,7 +5,19 @@ namespace MeAluga.Models
 {
     [Owned]
     public class Endereco
-    {   
+    {           
+        public Endereco()
+        {
+            
+        }
+
+        public Endereco(string rua, string numero, string bairro)
+        {
+            Rua = rua;
+            Numero = numero;
+            Bairro = bairro;
+        }
+
         [MaxLength(10)]
         public string CEP { get; set; }
 

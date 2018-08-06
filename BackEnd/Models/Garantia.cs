@@ -8,7 +8,7 @@ namespace MeAluga.Models
         [Key]
         public int Id { get; set; }        
         
-        public virtual Pessoa Fiador { get; set; }
+        public Locatario Fiador { get; set; }
 
         [Display(Name = "Valor do Caução")]
         public decimal? valorCaucao { get; set; }

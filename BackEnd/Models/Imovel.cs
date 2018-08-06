@@ -17,6 +17,6 @@ namespace MeAluga.Models
 
                 
         public Endereco Endereco { get; set; }
-        public virtual ICollection<Contrato> Contratos {get;set;}
+        public ICollection<Contrato> Contratos {get;set;}
     }
 }

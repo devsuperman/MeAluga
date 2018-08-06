@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MeAluga.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeAluga.Models
 {
-    public class Pessoa
+    public class Locatario
     {        
         [Key]
         public int Id { get; set; }
@@ -23,16 +24,13 @@ namespace MeAluga.Models
         public string RG { get; set; }
         
 
-        //TODO: Completar os dados da pessoa
-
-
+        //TODO: Completar os dados do locatário
 
         [Display(Name = "Data de Registro")]
         public System.DateTime DataRegistro { get; set; } = System.DateTime.Now;
-
-
+                
         public Endereco Endereco {get;set;}
-        public virtual ICollection<Contrato> Contratos {get;set;} = new List<Contrato>();
+        public ICollection<Contrato> Contratos {get;set;} = new List<Contrato>();
         
     }
 }

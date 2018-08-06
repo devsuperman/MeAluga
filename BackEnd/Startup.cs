@@ -22,8 +22,7 @@ namespace BackEnd
         {
 
             services
-                .AddDbContext<Contexto>(options => options
-                    .UseLazyLoadingProxies()
+                .AddDbContext<Contexto>(options => options                    
                     .UseSqlite(Configuration.GetConnectionString("MeAlugaDB")));
 
             services

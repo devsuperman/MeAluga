@@ -28,6 +28,6 @@ namespace MeAluga.Models
         [Display(Name = "Observação"), MaxLength(500)]
         public string observacao { get; set; }
 
-        public virtual Contrato Contrato {get;set;}
+        public Contrato Contrato {get;set;}
     }
 }
