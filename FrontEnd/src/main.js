@@ -1,19 +1,18 @@
-import '@babel/polyfill'
-import './plugins/vuetify'
+import '@babel/polyfill';
+import './plugins/vuetify';
+import './plugins/veevalidate';
+import './plugins/vuepagetitle';
 import Vue from 'vue';
 import App from './App.vue';
-import VueResource from "vue-resource";
 import router from "./router";
-import VeeValidate from "vee-validate";
+import VueResource from "vue-resource";
 
 Vue.config.productionTip = false;
-
-Vue.use(VeeValidate);
 Vue.use(VueResource);
 
 new Vue({
   render: h => h(App),  
-  router,
+  router,  
   http:{
     root: 'https://localhost:5001/api/'
   }

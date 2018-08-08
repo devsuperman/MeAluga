@@ -6,7 +6,7 @@ export default class Endereco{
         this.Bairro = bairro;
         this.Numero = numero;
         this.Complemento = complemento;
-        this.Cep = cep;
+        this.CEP = cep;
         this.Cidade = cidade;
         this.Estado = estado;
     }

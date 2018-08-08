@@ -3,6 +3,6 @@ export default class Imovel{
     
     constructor(endereco)
     {
-        this.Endereco = endereco;
+        this.Endereco = endereco;        
     }
 }
