@@ -2,7 +2,7 @@ export default class ImovelService{
 
     constructor(resource)
     {
-        this.Resource = resource('imoveis/{/id}');   
+        this.Resource = resource('imoveis{/id}');   
     }
 
     listar()
@@ -31,7 +31,7 @@ export default class ImovelService{
                     }
                 );
         }
-        else{
+        else{            
             return this.Resource.save(imovel)
                 .then(
                     null,

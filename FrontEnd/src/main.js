@@ -9,11 +9,9 @@ import VueResource from "vue-resource";
 
 Vue.config.productionTip = false;
 Vue.use(VueResource);
+Vue.http.options.root = 'https://mealuga.azurewebsites.net/api/';
 
 new Vue({
   render: h => h(App),  
-  router,  
-  http:{
-    root: 'https://localhost:5001/api/'
-  }
+  router  
 }).$mount('#app');

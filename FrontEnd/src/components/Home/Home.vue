@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1> Welcome to Your Vue.js App </h1>
+    <h1 @click="Teste"> Welcome to Your Vue.js App </h1>
     <p>
       For guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -32,6 +32,14 @@
 
 <script>
 export default {  
+  methods: {
+      Teste(){  
+        var obj = JSON.stringify({value: 'tiago'});
+      console.log(obj);
+        this.$http.post('https://localhost:5001/api/values', obj)
+            .then(null, err => console.log(err));
+      }
+  }
 }
 </script>
 

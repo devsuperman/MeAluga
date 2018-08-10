@@ -20,15 +20,25 @@
             class="elevation-1"
         >
             <template slot="items" slot-scope="props">              
-              <td> {{ props.item.endereco }} </td>
+              <td @click="LinkPara('imoveis/details/' + props.item.id)"> {{ props.item.endereco }} </td>
               <td> {{ props.item.situacao }} </td>            
             </template>
+
+            <template slot="no-data" slot-scope="props">              
+              <v-alert :value="true" color="error" icon="warning">
+                Sorry, nothing to display here :(
+              </v-alert>          
+            </template>
+
         </v-data-table>
 
     </div>
 </template>
 
 <script>
+
+  import ImovelService from '../../domain/imovel/ImovelService';
+
   export default {
     data () {
       return {   
@@ -37,22 +47,18 @@
           { text: 'Endereço', value: 'endereco' },
           { text: 'Situação', value: 'situacao' }                
         ],
-        imoveis: [
-          {
-            endereco: 'rua jatuarana, 1200',
-            situacao: 'Desocupado'
-          },
-          {
-            endereco: 'rua jatuarana, 1500',
-            situacao: 'Alugado para Tiago Bernardo'
-          },
-        ]
+        imoveis: []
       }
+    },
+    created(){
+      this.service = new ImovelService(this.$resource);
+      
+      this.service.listar().then(res => this.imoveis = res, err => console.log(err));
     },
     methods:{
       LinkPara(rota){
         this.$router.push(rota);
-      }
+      }     
     }
   }
 </script>

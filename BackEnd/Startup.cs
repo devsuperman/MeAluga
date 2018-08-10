@@ -23,7 +23,7 @@ namespace BackEnd
 
             services
                 .AddDbContext<Contexto>(options => options                    
-                    .UseSqlite(Configuration.GetConnectionString("MeAlugaDB")));
+                    .UseSqlServer(Configuration.GetConnectionString("MeAlugaDB")));
 
             services
                 .AddMvc()

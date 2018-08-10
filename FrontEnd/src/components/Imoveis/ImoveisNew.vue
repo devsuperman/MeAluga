@@ -52,8 +52,6 @@
             data-vv-name="complemento"
             required
             ></v-text-field>
-
-
             
             <!-- <v-btn @click="LimparCampos">
               Limpar
@@ -76,8 +74,8 @@
 
 <script>
 import Endereco from "../../domain/shared/Endereco";
-// import Imovel from "../../domain/imovel/Imovel";
-// import ImovelService from "../../domain/imovel/ImovelService";
+import Imovel from "../../domain/imovel/Imovel";
+import ImovelService from "../../domain/imovel/ImovelService";
 
   export default {
     data () {
@@ -85,13 +83,17 @@ import Endereco from "../../domain/shared/Endereco";
         endereco: new Endereco()        
       }
     },
+    created(){
+      this.service = new ImovelService(this.$resource);      
+    },
     methods:{
       Salvar(){
-        this.$validator.validateAll()
-          .then(success => {
+        this.$validator.validateAll().then(success => {
             if (success) {
-              // eslint-disable-next-line
-              console.log('gol');              
+                            
+              var imovel = new Imovel(this.endereco);                                
+              this.service.salvar(imovel);
+
             }
           });
       },
