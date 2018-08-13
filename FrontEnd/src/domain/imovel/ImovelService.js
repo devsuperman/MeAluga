@@ -13,6 +13,7 @@ export default class ImovelService{
                 res => res.json(),
                 err =>
                 {
+                    // eslint-disable-next-line
                     console.log(err);
                     throw new Error('Não foi possível listar.');
                 }
@@ -26,6 +27,7 @@ export default class ImovelService{
                 .then(
                     null,
                     err => {
+                        // eslint-disable-next-line
                         console.log(err);
                         throw new Error('Não foi possível atualizar.');                        
                     }
@@ -36,6 +38,7 @@ export default class ImovelService{
                 .then(
                     null,
                     err => {
+                        // eslint-disable-next-line
                         console.log(err);
                         throw new Error('Não foi possível salvar.');                        
                     }
@@ -49,6 +52,7 @@ export default class ImovelService{
         .then(
             null,
             err => {
+                // eslint-disable-next-line
                 console.log(err);
                 throw new Error('Não foi possível apagar.');                        
             }
@@ -61,6 +65,7 @@ export default class ImovelService{
         .then(
             res => res.json(),
             err => {
+                // eslint-disable-next-line
                 console.log(err);
                 throw new Error('Não foi buscar.');                        
             }

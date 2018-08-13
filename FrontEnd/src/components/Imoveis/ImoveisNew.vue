@@ -89,11 +89,9 @@ import ImovelService from "../../domain/imovel/ImovelService";
     methods:{
       Salvar(){
         this.$validator.validateAll().then(success => {
-            if (success) {
-                            
-              var imovel = new Imovel(this.endereco);                                
+            if (success) {                            
+              var imovel =new Imovel(this.endereco);                                              
               this.service.salvar(imovel);
-
             }
           });
       },
