@@ -45,7 +45,7 @@ namespace BackEnd.Controllers
             if (ModelState.IsValid)
             {
                 db.Imoveis.Add(model);
-                db.SaveChanges();
+                db.SaveChanges();                
             }
         }
 

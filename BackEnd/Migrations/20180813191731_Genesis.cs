@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BackEnd.Migrations
+namespace MeAluga.Migrations
 {
     public partial class Genesis : Migration
     {

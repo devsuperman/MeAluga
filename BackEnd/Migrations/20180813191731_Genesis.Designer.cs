@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BackEnd.Migrations
+namespace MeAluga.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20180807072338_Genesis")]
+    [Migration("20180813191731_Genesis")]
     partial class Genesis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

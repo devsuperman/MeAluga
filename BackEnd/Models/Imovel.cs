@@ -11,10 +11,8 @@ namespace MeAluga.Models
         [Key]
         public int Id { get; set; }
        
-
         [Display(Name = "Data de Registro")]
         public DateTime DataRegistro { get; set; } = System.DateTime.Now;
-
                 
         public Endereco Endereco { get; set; }
         public ICollection<Contrato> Contratos {get;set;}
