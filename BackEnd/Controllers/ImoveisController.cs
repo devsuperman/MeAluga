@@ -14,57 +14,66 @@ namespace BackEnd.Controllers
         public ImoveisController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public ActionResult<IEnumerable<Imovel>> Get(string search)
+        public IActionResult Get(string search)
         {
-            search = (search is null ? "" : search.ToLower());
+            search = (search is null ? "" : search);
 
             var lista = db.Imoveis.Where(w => 
-                    w.Endereco.Rua.ToLower().Contains(search) ||
-                    w.Endereco.Numero.ToLower().Contains(search) ||
-                    w.Endereco.Bairro.ToLower().Contains(search) ||
-                    w.Endereco.Complemento.ToLower().Contains(search))
+                    w.Endereco.Rua.Contains(search) ||
+                    w.Endereco.Numero.Contains(search) ||
+                    w.Endereco.Bairro.Contains(search) ||
+                    w.Endereco.Complemento.Contains(search))
                 .ToList();
 
-            return lista;
+            return Ok(lista);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Imovel> Get(int id)
+        public IActionResult Get(int id)
         {
             var model = db.Imoveis.Find(id);
             
             if (model is null)
                 return NotFound();
 
-            return model;
+            return Ok(model);
         }
 
         [HttpPost]
-        public void Post([FromBody] Imovel model)
+        public IActionResult Post([FromBody] Imovel model)
         {
             if (ModelState.IsValid)
             {
                 db.Imoveis.Add(model);
-                db.SaveChanges();                
+                db.SaveChanges();   
+
+                return CreatedAtAction(nameof(Get), model);                
             }
+
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Imovel model)
+        public IActionResult Put(int id, [FromBody] Imovel model)
         {
             if (ModelState.IsValid)
             {
                 db.Imoveis.Update(model);
                 db.SaveChanges();
+                return Accepted(model);
             }
+
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             var model = db.Imoveis.Find(id);
             db.Imoveis.Remove(model);
             db.SaveChanges();
+
+            return NoContent();
         }
     }
 }
