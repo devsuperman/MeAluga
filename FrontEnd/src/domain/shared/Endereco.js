@@ -1,5 +1,5 @@
 export default class Endereco{
-
+    
     constructor(rua, bairro, numero, complemento, cep, cidade, estado)
     {
         this.Rua = rua;
@@ -10,5 +10,5 @@ export default class Endereco{
         this.Cidade = cidade;
         this.Estado = estado;
     }
-    
+
 }

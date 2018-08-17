@@ -1,108 +1,50 @@
 <template>
-    <div>
-       <v-card>
-      <v-container
-        fluid
-        grid-list-lg
-      >
-        <v-layout row wrap>
-          <v-flex xs12>
-            <v-card color="blue-grey darken-2" class="white--text">
-              <v-card-title primary-title>
-                <div class="headline">Unlimited music now</div>
-                <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div>
-              </v-card-title>
-              <v-card-actions>
-                <v-btn flat dark>Listen now</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
+  <v-layout>
+    <v-flex xs12 sm6 offset-sm3>
+      <v-card>
+        
+        <v-card-media
+          src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+          height="200px"
+        >        
+        </v-card-media>
 
-          <v-flex xs12>
-            <v-card color="cyan darken-2" class="white--text">
-              <v-layout>
-                <v-flex xs5>
-                  <v-card-media
-                    src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
-                    height="125px"
-                    contain
-                  ></v-card-media>
-                </v-flex>
-                <v-flex xs7>
-                  <v-card-title primary-title>
-                    <div>
-                      <div class="headline">Supermodel</div>
-                      <div>Foster the People</div>
-                      <div>(2014)</div>
-                    </div>
-                  </v-card-title>
-                </v-flex>
-              </v-layout>
-              <v-divider light></v-divider>
-              <v-card-actions class="pa-3">
-                Rate this album
-                <v-spacer></v-spacer>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0"> 
+              {{ imovel.endereco.rua }}, {{imovel.endereco.numero}}, {{imovel.endereco.bairro}}, 
+              {{imovel.endereco.complemento}}, {{imovel.endereco.cep}}
+            </h3>            
+          </div>
+        </v-card-title>
+       
+        <v-btn fab dark color="teal" top absolute :to="{name: 'Imoveis'}">
+          <v-icon dark>arrow_back</v-icon>
+        </v-btn>
 
-          <v-flex xs12>
-            <v-card color="purple" class="white--text">
-              <v-layout row>
-                <v-flex xs7>
-                  <v-card-title primary-title>
-                    <div>
-                      <div class="headline">Halycon Days</div>
-                      <div>Ellie Goulding</div>
-                      <div>(2013)</div>
-                    </div>
-                  </v-card-title>
-                </v-flex>
-                <v-flex xs5>
-                  <v-card-media
-                    src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-                    height="125px"
-                    contain
-                  ></v-card-media>
-                </v-flex>
-              </v-layout>
-              <v-divider light></v-divider>
-              <v-card-actions class="pa-3">
-                Rate this album
-                <v-spacer></v-spacer>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-                <v-icon>star_border</v-icon>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-card>
-    </div>
+        <v-btn fab dark color="pink" right top absolute :to="{name: 'EditarImovel', params: {id: imovel.id}}">
+          <v-icon dark>edit</v-icon>
+        </v-btn>
+
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
-import Endereco from "../../domain/shared/Endereco";
-// import Imovel from "../../domain/imovel/Imovel";
-// import ImovelService from "../../domain/imovel/ImovelService";
+import Imovel from "../../domain/imovel/Imovel";
+import ImovelService from "../../domain/imovel/ImovelService";
 
   export default {
     data () {
       return {   
-        
+        imovel: new Imovel()
       }
     },
-    methods:{
-      
-    }
+    created(){
+      this.service = new ImovelService(this.$resource);      
+      this.service.buscar(this.$route.params.id).then(res => this.imovel = res);
+    }    
   }
 </script>
 

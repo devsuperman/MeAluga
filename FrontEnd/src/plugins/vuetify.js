@@ -13,6 +13,8 @@ import {
   VDataTable,
   VTextField,
   VAlert,
+  VCard,
+  VDivider,
   transitions
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl'
@@ -31,6 +33,8 @@ Vue.use(Vuetify, {
     VDataTable,
     VTextField,
     VAlert,
+    VCard,
+    VDivider,
     transitions
   },
   theme: {

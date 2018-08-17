@@ -8,7 +8,7 @@
         top
         right
         color="pink"
-        @click.native="LinkPara('imoveis/new')"
+        to="imoveis/new"        
       >
         <v-icon>add</v-icon>
       </v-btn>
@@ -23,14 +23,15 @@
               <td @click="LinkPara('imoveis/details/' + props.item.id)"> 
                 {{ props.item.endereco.rua }},
                 {{ props.item.endereco.numero }}, 
-                {{ props.item.endereco.bairro }} 
+                {{ props.item.endereco.bairro }},  
+                {{ props.item.endereco.complemento }} 
               </td>
               <td> {{ props.item.situacao }} </td>            
             </template>
 
             <template slot="no-data" slot-scope="props">              
               <v-alert :value="true" color="error" icon="warning">
-                Sorry, nothing to display here :(
+                Desculpe, nada para mostrar aqui :(
               </v-alert>          
             </template>
 
@@ -56,7 +57,7 @@
     },
     created(){
       this.service = new ImovelService(this.$resource);      
-      this.service.listar().then(res => this.imoveis = res, err => console.log(err));
+      this.service.listar().then(res => this.imoveis = res);
     },
     methods:{
       LinkPara(rota){

@@ -13,8 +13,8 @@ export default class ImovelService{
 
     salvar(imovel)
     {
-        if (imovel.Id) {
-            return this.Resource.update({id: imovel.Id}, imovel);
+        if (imovel.id) {
+            return this.Resource.update({id: imovel.id}, imovel);
         }
         else{            
             return this.Resource.save(imovel);
