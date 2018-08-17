@@ -20,7 +20,11 @@
             class="elevation-1"
         >
             <template slot="items" slot-scope="props">              
-              <td @click="LinkPara('imoveis/details/' + props.item.id)"> {{ props.item.endereco }} </td>
+              <td @click="LinkPara('imoveis/details/' + props.item.id)"> 
+                {{ props.item.endereco.rua }},
+                {{ props.item.endereco.numero }}, 
+                {{ props.item.endereco.bairro }} 
+              </td>
               <td> {{ props.item.situacao }} </td>            
             </template>
 
@@ -51,8 +55,7 @@
       }
     },
     created(){
-      this.service = new ImovelService(this.$resource);
-      
+      this.service = new ImovelService(this.$resource);      
       this.service.listar().then(res => this.imoveis = res, err => console.log(err));
     },
     methods:{

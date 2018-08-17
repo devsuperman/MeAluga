@@ -44,7 +44,7 @@
 
 
             <v-text-field
-            v-validate="'required|max:50'"
+            v-validate="'max:50'"
             v-model="endereco.Complemento"
             :counter="50"
             :error-messages="errors.collect('complemento')"
@@ -89,9 +89,17 @@ import ImovelService from "../../domain/imovel/ImovelService";
     methods:{
       Salvar(){
         this.$validator.validateAll().then(success => {
+            
             if (success) {                            
-              var imovel =new Imovel(this.endereco);                                              
-              this.service.salvar(imovel);
+              
+              var imovel = new Imovel(this.endereco);                                              
+              
+              this.service.salvar(imovel)
+                .then(resposta => {                  
+                  var url = 'details/' + resposta.body.id;                
+                  this.$router.push(url);
+              });
+              
             }
           });
       },
@@ -124,7 +132,9 @@ import ImovelService from "../../domain/imovel/ImovelService";
           });                
       }
     }
+  
   }
+
 </script>
 
 <style scoped>

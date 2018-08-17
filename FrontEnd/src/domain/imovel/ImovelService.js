@@ -7,69 +7,29 @@ export default class ImovelService{
 
     listar()
     {
-        return this.Resource
-            .query()
-            .then(
-                res => res.json(),
-                err =>
-                {
-                    // eslint-disable-next-line
-                    console.log(err);
-                    throw new Error('Não foi possível listar.');
-                }
-            )
+        return this.Resource.query()
+            .then(res => res.json());
     }
 
     salvar(imovel)
     {
         if (imovel.Id) {
-            return this.Resource.update({id: imovel.Id}, imovel)
-                .then(
-                    null,
-                    err => {
-                        // eslint-disable-next-line
-                        console.log(err);
-                        throw new Error('Não foi possível atualizar.');                        
-                    }
-                );
+            return this.Resource.update({id: imovel.Id}, imovel);
         }
         else{            
-            return this.Resource.save(imovel)
-                .then(
-                    null,
-                    err => {
-                        // eslint-disable-next-line
-                        console.log(err);
-                        throw new Error('Não foi possível salvar.');                        
-                    }
-                );
+            return this.Resource.save(imovel);
         }
     }
 
     apagar(id)
     {
-        return this.Resource.delete(id)
-        .then(
-            null,
-            err => {
-                // eslint-disable-next-line
-                console.log(err);
-                throw new Error('Não foi possível apagar.');                        
-            }
-        )
+        return this.Resource.delete(id);        
     }
 
     buscar(id)
     {
         return this.Resource.get({id})
-        .then(
-            res => res.json(),
-            err => {
-                // eslint-disable-next-line
-                console.log(err);
-                throw new Error('Não foi buscar.');                        
-            }
-        )
+        .then(res => res.json());
     }
 
 }

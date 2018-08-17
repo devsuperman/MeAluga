@@ -47,7 +47,7 @@ namespace BackEnd.Controllers
                 db.Imoveis.Add(model);
                 db.SaveChanges();   
 
-                return CreatedAtAction(nameof(Get), model);                
+                return Created(nameof(Get), model);
             }
 
             return BadRequest();
