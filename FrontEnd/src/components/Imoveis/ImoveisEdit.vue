@@ -5,9 +5,9 @@
             v-validate="'required|max:8'"
             v-model="imovel.endereco.cep"
             :counter="8"
-            :error-messages="errors.collect('cep')"
+            :error-messages="errors.collect('CEP')"
             label="CEP"
-            data-vv-name="cep"
+            data-vv-name="CEP"
             required
             @input="BuscarCEP()"
             ></v-text-field>
@@ -85,8 +85,8 @@ import ImovelService from "../../domain/imovel/ImovelService";
       }
     },
     created(){
-      this.service = new ImovelService(this.$resource);    
       
+      this.service = new ImovelService(this.$resource);          
       this.service.buscar(this.$route.params.id)
         .then(r => this.imovel = r);        
     },
@@ -104,6 +104,9 @@ import ImovelService from "../../domain/imovel/ImovelService";
           });
       },
       LimparCampos(){
+          console.log('limpar');
+          console.log(this.imovel);
+
           this.imovel.endereco.cep = '';
           this.imovel.endereco.rua = '';
           this.imovel.endereco.numero = '';
@@ -111,7 +114,9 @@ import ImovelService from "../../domain/imovel/ImovelService";
           this.imovel.endereco.complemento = '';
       },
       BuscarCEP(){
-        
+        console.log('buscar ');
+          console.log(this.imovel);
+
         if (this.imovel.endereco.cep.length < 8) {
           return;
         }

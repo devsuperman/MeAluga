@@ -9,7 +9,8 @@ import VueResource from "vue-resource";
 
 Vue.config.productionTip = false;
 Vue.use(VueResource);
-Vue.http.options.root = 'https://localhost:5001/api/';
+// Vue.http.options.root = 'https://localhost:5001/api/';
+Vue.http.options.root = 'http://localhost:49459/api/';
 
 new Vue({
   render: h => h(App),  

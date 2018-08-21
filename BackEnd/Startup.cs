@@ -43,7 +43,7 @@ namespace BackEnd
                 app.UseHsts();
             }
 
-            app.UseCors(b => b.WithOrigins("http://localhost:8080").AllowAnyHeader());
+            app.UseCors(b => b.WithOrigins("http://10.22.4.72:8080"));
 
             app.UseHttpsRedirection();
             app.UseMvc();
