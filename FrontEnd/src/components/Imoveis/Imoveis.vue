@@ -20,7 +20,7 @@
             class="elevation-1"
         >
             <template slot="items" slot-scope="props">              
-              <td @click="LinkPara('imoveis/details/' + props.item.id)"> 
+              <td @click="LinkPara({name: 'DetalhesDoImovel', params:{id: props.item.id}})"> 
                 {{ props.item.endereco.rua }},
                 {{ props.item.endereco.numero }}, 
                 {{ props.item.endereco.bairro }},  

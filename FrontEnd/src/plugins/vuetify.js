@@ -15,6 +15,7 @@ import {
   VAlert,
   VCard,
   VDivider,
+  VDialog,
   transitions
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl'
@@ -35,6 +36,7 @@ Vue.use(Vuetify, {
     VAlert,
     VCard,
     VDivider,
+    VDialog,
     transitions
   },
   theme: {

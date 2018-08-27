@@ -23,7 +23,7 @@ export default class ImovelService{
 
     apagar(id)
     {
-        return this.Resource.delete(id);        
+        return this.Resource.delete({id});        
     }
 
     buscar(id)

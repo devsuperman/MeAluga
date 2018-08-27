@@ -42,8 +42,8 @@ namespace BackEnd
             {
                 app.UseHsts();
             }
-
-            app.UseCors(b => b.WithOrigins("http://10.22.4.72:8080"));
+            
+            app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseHttpsRedirection();
             app.UseMvc();
