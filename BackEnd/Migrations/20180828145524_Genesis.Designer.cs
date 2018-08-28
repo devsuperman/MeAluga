@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeAluga.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20180828125501_genesis")]
-    partial class genesis
+    [Migration("20180828145524_Genesis")]
+    partial class Genesis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,16 +25,16 @@ namespace MeAluga.Migrations
 
                     b.Property<int?>("ContratoId");
 
-                    b.Property<DateTime?>("DataPagamento");
+                    b.Property<DateTime?>("DataDePagamento");
+
+                    b.Property<string>("Observacao")
+                        .HasMaxLength(500);
 
                     b.Property<decimal>("Valor");
 
                     b.Property<decimal?>("ValorPago");
 
                     b.Property<DateTime>("Vencimento");
-
-                    b.Property<string>("observacao")
-                        .HasMaxLength(500);
 
                     b.HasKey("Id");
 
@@ -48,24 +48,20 @@ namespace MeAluga.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataRegistro");
+                    b.Property<DateTime>("DataDeInicio");
 
-                    b.Property<int?>("GarantiaId");
+                    b.Property<DateTime>("DataDeRegistro");
 
-                    b.Property<int?>("ImovelId");
+                    b.Property<DateTime>("DataDeTermino");
 
-                    b.Property<DateTime>("Inicio");
+                    b.Property<int>("ImovelId");
 
-                    b.Property<int?>("LocatarioId");
+                    b.Property<int>("LocatarioId");
 
                     b.Property<string>("Observacao")
                         .HasMaxLength(300);
 
-                    b.Property<DateTime>("Termino");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("GarantiaId");
 
                     b.HasIndex("ImovelId");
 
@@ -74,18 +70,37 @@ namespace MeAluga.Migrations
                     b.ToTable("Contratos");
                 });
 
+            modelBuilder.Entity("MeAluga.Models.Fiador", b =>
+                {
+                    b.Property<int>("GarantiaId");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasMaxLength(11);
+
+                    b.Property<DateTime>("DataDeRegistro");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("RG")
+                        .HasMaxLength(20);
+
+                    b.HasKey("GarantiaId");
+
+                    b.ToTable("Fiador");
+                });
+
             modelBuilder.Entity("MeAluga.Models.Garantia", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("ContratoId");
 
-                    b.Property<int?>("FiadorId");
+                    b.Property<DateTime>("DataDeRegistro");
 
                     b.Property<decimal?>("valorCaucao");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("FiadorId");
+                    b.HasKey("ContratoId");
 
                     b.ToTable("Garantia");
                 });
@@ -95,7 +110,7 @@ namespace MeAluga.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataRegistro");
+                    b.Property<DateTime>("DataDeRegistro");
 
                     b.HasKey("Id");
 
@@ -111,13 +126,14 @@ namespace MeAluga.Migrations
                         .IsRequired()
                         .HasMaxLength(11);
 
-                    b.Property<DateTime>("DataRegistro");
+                    b.Property<DateTime>("DataDeRegistro");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<string>("RG")
+                        .IsRequired()
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
@@ -134,24 +150,64 @@ namespace MeAluga.Migrations
 
             modelBuilder.Entity("MeAluga.Models.Contrato", b =>
                 {
-                    b.HasOne("MeAluga.Models.Garantia", "Garantia")
-                        .WithMany()
-                        .HasForeignKey("GarantiaId");
-
                     b.HasOne("MeAluga.Models.Imovel", "Imovel")
                         .WithMany("Contratos")
-                        .HasForeignKey("ImovelId");
+                        .HasForeignKey("ImovelId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MeAluga.Models.Locatario", "Locatario")
                         .WithMany("Contratos")
-                        .HasForeignKey("LocatarioId");
+                        .HasForeignKey("LocatarioId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MeAluga.Models.Fiador", b =>
+                {
+                    b.HasOne("MeAluga.Models.Garantia", "Garantia")
+                        .WithOne("Fiador")
+                        .HasForeignKey("MeAluga.Models.Fiador", "GarantiaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("MeAluga.Models.Endereco", "Endereco", b1 =>
+                        {
+                            b1.Property<int>("FiadorGarantiaId");
+
+                            b1.Property<string>("Bairro")
+                                .HasMaxLength(50);
+
+                            b1.Property<string>("CEP")
+                                .HasMaxLength(10);
+
+                            b1.Property<string>("Cidade")
+                                .HasMaxLength(50);
+
+                            b1.Property<string>("Complemento")
+                                .HasMaxLength(100);
+
+                            b1.Property<string>("Estado")
+                                .HasMaxLength(50);
+
+                            b1.Property<string>("Numero")
+                                .HasMaxLength(10);
+
+                            b1.Property<string>("Rua")
+                                .HasMaxLength(50);
+
+                            b1.ToTable("Fiador");
+
+                            b1.HasOne("MeAluga.Models.Fiador")
+                                .WithOne("Endereco")
+                                .HasForeignKey("MeAluga.Models.Endereco", "FiadorGarantiaId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("MeAluga.Models.Garantia", b =>
                 {
-                    b.HasOne("MeAluga.Models.Locatario", "Fiador")
-                        .WithMany()
-                        .HasForeignKey("FiadorId");
+                    b.HasOne("MeAluga.Models.Contrato", "Contrato")
+                        .WithOne("Garantia")
+                        .HasForeignKey("MeAluga.Models.Garantia", "ContratoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MeAluga.Models.Imovel", b =>
