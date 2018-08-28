@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MeAluga.Migrations
 {
-    public partial class Genesis : Migration
+    public partial class genesis : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,17 +33,10 @@ namespace MeAluga.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(maxLength: 100, nullable: false),
+                    Nome = table.Column<string>(maxLength: 50, nullable: false),
                     CPF = table.Column<string>(maxLength: 11, nullable: false),
                     RG = table.Column<string>(maxLength: 20, nullable: true),
-                    DataRegistro = table.Column<DateTime>(nullable: false),
-                    Endereco_CEP = table.Column<string>(maxLength: 10, nullable: true),
-                    Endereco_Rua = table.Column<string>(maxLength: 50, nullable: true),
-                    Endereco_Numero = table.Column<string>(maxLength: 10, nullable: true),
-                    Endereco_Bairro = table.Column<string>(maxLength: 50, nullable: true),
-                    Endereco_Complemento = table.Column<string>(maxLength: 100, nullable: true),
-                    Endereco_Cidade = table.Column<string>(maxLength: 50, nullable: true),
-                    Endereco_Estado = table.Column<string>(maxLength: 50, nullable: true)
+                    DataRegistro = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

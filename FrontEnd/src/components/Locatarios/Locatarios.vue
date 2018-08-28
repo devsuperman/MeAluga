@@ -8,25 +8,25 @@
         top
         right
         color="pink"
-        to="imoveis/new"        
+        :to="{name: 'CriarLocatario'}"                
       >
         <v-icon>add</v-icon>
       </v-btn>
 
         <v-data-table
             :headers="headers"
-            :items="imoveis"
+            :items="locatarios"
             hide-actions
             class="elevation-1"
         >
-            <template slot="items" slot-scope="props">              
-              <td @click="LinkPara({name: 'DetalhesDoImovel', params:{id: props.item.id}})"> 
-                {{ props.item.endereco.rua }},
-                {{ props.item.endereco.numero }}, 
-                {{ props.item.endereco.bairro }},  
-                {{ props.item.endereco.complemento }} 
+            <template slot="items" slot-scope="props">
+              <td> 
+                <router-link :to="{name: 'DetalhesDoLocatario', params:{id:props.item.id}}">
+                  {{ props.item.nome }}                                  
+                </router-link>
               </td>
-              <td> {{ props.item.situacao }} </td>            
+              <td> {{ props.item.cpf }} </td>            
+              <td> {{ props.item.rg }} </td>
             </template>
 
             <template slot="no-data" slot-scope="props">              
@@ -42,29 +42,26 @@
 
 <script>
 
-  import ImovelService from '../../domain/imovel/ImovelService';
+  import LocatarioService from '../../domain/locatario/LocatarioService';
 
   export default {
     data () {
       return {   
         msg: false,     
         headers: [
-          { text: 'Endereço', value: 'endereco' },
-          { text: 'Situação', value: 'situacao' }                
+          { text: 'Nome', value: 'nome' },
+          { text: 'CPF', value: 'cpf' },
+          { text: 'RG', value: 'rg' }                                
         ],
-        imoveis: []
+        locatarios: []
       }
     },
     created(){
-      this.service = new ImovelService(this.$resource);      
-      this.service.listar().then(res => this.imoveis = res);
-    },
-    methods:{
-      LinkPara(rota){
-        this.$router.push(rota);
-      }     
+      this.service = new LocatarioService(this.$resource);      
+      this.service.listar().then(res => this.locatarios = res);
     }
   }
+  
 </script>
 
 <style scoped>

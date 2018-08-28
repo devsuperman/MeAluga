@@ -113,7 +113,7 @@ namespace MeAluga.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100);
+                        .HasMaxLength(50);
 
                     b.Property<string>("RG")
                         .HasMaxLength(20);
@@ -184,42 +184,6 @@ namespace MeAluga.Migrations
                             b1.HasOne("MeAluga.Models.Imovel")
                                 .WithOne("Endereco")
                                 .HasForeignKey("MeAluga.Models.Endereco", "ImovelId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-                });
-
-            modelBuilder.Entity("MeAluga.Models.Locatario", b =>
-                {
-                    b.OwnsOne("MeAluga.Models.Endereco", "Endereco", b1 =>
-                        {
-                            b1.Property<int>("LocatarioId");
-
-                            b1.Property<string>("Bairro")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("CEP")
-                                .HasMaxLength(10);
-
-                            b1.Property<string>("Cidade")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("Complemento")
-                                .HasMaxLength(100);
-
-                            b1.Property<string>("Estado")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("Numero")
-                                .HasMaxLength(10);
-
-                            b1.Property<string>("Rua")
-                                .HasMaxLength(50);
-
-                            b1.ToTable("Locatarios");
-
-                            b1.HasOne("MeAluga.Models.Locatario")
-                                .WithOne("Endereco")
-                                .HasForeignKey("MeAluga.Models.Endereco", "LocatarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

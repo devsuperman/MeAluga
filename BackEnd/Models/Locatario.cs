@@ -12,7 +12,7 @@ namespace MeAluga.Models
         public int Id { get; set; }
 
 
-        [Required, MaxLength(100)]
+        [Required, MaxLength(50)]
         public string Nome { get; set; }
 
         
@@ -28,8 +28,7 @@ namespace MeAluga.Models
 
         [Display(Name = "Data de Registro")]
         public System.DateTime DataRegistro { get; set; } = System.DateTime.Now;
-                
-        public Endereco Endereco {get;set;}
+        
         public ICollection<Contrato> Contratos {get;set;} = new List<Contrato>();
         
     }

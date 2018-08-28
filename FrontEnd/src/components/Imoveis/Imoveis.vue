@@ -8,7 +8,7 @@
         top
         right
         color="pink"
-        to="imoveis/new"        
+        :to="{name: 'CriarImovel'}"        
       >
         <v-icon>add</v-icon>
       </v-btn>
@@ -20,11 +20,13 @@
             class="elevation-1"
         >
             <template slot="items" slot-scope="props">              
-              <td @click="LinkPara({name: 'DetalhesDoImovel', params:{id: props.item.id}})"> 
-                {{ props.item.endereco.rua }},
-                {{ props.item.endereco.numero }}, 
-                {{ props.item.endereco.bairro }},  
-                {{ props.item.endereco.complemento }} 
+              <td> 
+                <router-link :to="{name: 'DetalhesDoLocatario', params:{id:props.item.id}}">
+                  {{ props.item.endereco.rua }},
+                  {{ props.item.endereco.numero }}, 
+                  {{ props.item.endereco.bairro }},  
+                  {{ props.item.endereco.complemento }} 
+                </router-link>
               </td>
               <td> {{ props.item.situacao }} </td>            
             </template>
@@ -58,11 +60,6 @@
     created(){
       this.service = new ImovelService(this.$resource);      
       this.service.listar().then(res => this.imoveis = res);
-    },
-    methods:{
-      LinkPara(rota){
-        this.$router.push(rota);
-      }     
     }
   }
 </script>

@@ -11,13 +11,13 @@ export default class ImovelService{
             .then(res => res.json());
     }
 
-    salvar(imovel)
+    salvar(model)
     {
-        if (imovel.id) {
-            return this.Resource.update({id: imovel.id}, imovel);
+        if (model.id) {
+            return this.Resource.update({id: model.id}, model);
         }
         else{            
-            return this.Resource.save(imovel);
+            return this.Resource.save(model);
         }
     }
 

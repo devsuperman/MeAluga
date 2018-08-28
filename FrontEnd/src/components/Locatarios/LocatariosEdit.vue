@@ -2,58 +2,36 @@
     <div>
         <form>
             <v-text-field
-            v-validate="'required|max:8'"
-            v-model="imovel.endereco.cep"
-            :counter="8"
-            :error-messages="errors.collect('CEP')"
-            label="CEP"
-            data-vv-name="CEP"
-            required
-            @input="BuscarCEP()"
-            ></v-text-field>
-
-            <v-text-field
             v-validate="'required|max:50'"
-            v-model="imovel.endereco.rua"
-            :counter="50"            
-            :error-messages="errors.collect('rua')"
-            label="Rua"
-            data-vv-name="rua"
-            required
-            ></v-text-field>
-
-            <v-text-field
-            v-validate="'required|max:5'"
-            v-model="imovel.endereco.numero"
-            :counter="5"
-            :error-messages="errors.collect('numero')"
-            label="Número"
-            data-vv-name="numero"
-            required
-            ></v-text-field>
-
-            <v-text-field
-            v-validate="'required|max:50'"
-            v-model="imovel.endereco.bairro"
+            v-model="locatario.nome"
             :counter="50"
-            :error-messages="errors.collect('bairro')"
-            label="Bairro"
-            data-vv-name="bairro"
-            required
+            :error-messages="errors.collect('nome')"
+            label="Nome"
+            data-vv-name="nome"
+            required            
             ></v-text-field>
-
 
             <v-text-field
-            v-validate="'max:50'"
-            v-model="imovel.endereco.complemento"
-            :counter="50"
-            :error-messages="errors.collect('complemento')"
-            label="Complemento"
-            data-vv-name="complemento"
+            v-validate="'required|max:11'"
+            v-model="locatario.cpf"
+            :counter="11"
+            :error-messages="errors.collect('cpf')"
+            label="CPF"
+            data-vv-name="cpf"
             required
             ></v-text-field>
-            
-            <v-btn fab dark color="teal" :to="{name: 'DetalhesDoImovel', params: {id: imovel.id}}">
+
+            <v-text-field
+            v-validate="'required|max:20'"
+            v-model="locatario.rg"
+            :counter="20"
+            :error-messages="errors.collect('rg')"
+            label="RG"
+            data-vv-name="rg"
+            required
+            ></v-text-field>
+      
+            <v-btn fab dark color="teal" :to="{name: 'DetalhesDoLocatario', params:{id: locatario.id}}">
               <v-icon dark>arrow_back</v-icon>
             </v-btn>
 
@@ -65,78 +43,43 @@
               color="pink"
               @click="Salvar"
             >
-            
               <v-icon>check</v-icon>
             </v-btn>
-
         </form>
 
     </div>
 </template>
 
 <script>
-import Imovel from "../../domain/imovel/Imovel";
-import ImovelService from "../../domain/imovel/ImovelService";
+import Locatario from "../../domain/locatario/Locatario";
+import LocatarioService from "../../domain/locatario/LocatarioService";
 
   export default {
     data () {
       return {   
-        imovel: new Imovel()
+        locatario: new Locatario()        
       }
     },
-    created(){
-      
-      this.service = new ImovelService(this.$resource);          
+    created(){      
+      this.service = new LocatarioService(this.$resource);   
       this.service.buscar(this.$route.params.id)
-        .then(r => this.imovel = r);        
+        .then(res => this.locatario = res);
     },
     methods:{
       Salvar(){
         this.$validator.validateAll().then(success => {
             
-            if (success) {                                          
-              this.service.salvar(this.imovel)
+            if (success) {                            
+              
+              this.service.salvar(this.locatario)
                 .then(resposta => {                  
-                  var url = {name: 'DetalhesDoImovel', params: {id: resposta.body.id}};
-                  this.$router.push(url);
+                  var url = {name: 'DetalhesDoLocatario', params: {id: resposta.body.id}};                
+                  this.$router.push(url);                  
               });              
             }
           });
-      },
-      LimparCampos(){
-          console.log('limpar');
-          console.log(this.imovel);
-
-          this.imovel.endereco.cep = '';
-          this.imovel.endereco.rua = '';
-          this.imovel.endereco.numero = '';
-          this.imovel.endereco.bairro = '';          
-          this.imovel.endereco.complemento = '';
-      },
-      BuscarCEP(){
-        console.log('buscar ');
-          console.log(this.imovel);
-
-        if (this.imovel.endereco.cep.length < 8) {
-          return;
         }
-        
-        var validacep = /^[0-9]{8}$/;
-
-        if (!validacep.test(this.imovel.endereco.cep)) {          
-          return; 
-        }
-
-        var url = "https://viacep.com.br/ws/" + this.imovel.endereco.cep + "/json";
-
-        this.$http.get(url)
-          .then(res => res.json())
-          .then(endereco => {            
-            this.imovel.endereco.rua = endereco.logradouro;
-            this.imovel.endereco.bairro = endereco.bairro;
-          });                
-      }
-    }  
+    }
   }
 
 </script>

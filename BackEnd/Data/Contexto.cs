@@ -14,8 +14,7 @@ namespace MeAluga.Models
         public DbSet<Contrato> Contratos {get;set;}
         
         protected  override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Locatario>().OwnsOne(a => a.Endereco);
+        {            
             modelBuilder.Entity<Imovel>().OwnsOne(a => a.Endereco);
 
             // modelBuilder.Entity<Locatario>().HasData(

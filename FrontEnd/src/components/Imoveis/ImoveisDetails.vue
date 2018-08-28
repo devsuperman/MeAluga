@@ -76,9 +76,9 @@ import ImovelService from "../../domain/imovel/ImovelService";
     },
     methods: {
       Excluir(){
-        var url = {name: 'Imoveis'};        
+        var urlDestino = {name: 'Imoveis'};        
         this.service.apagar(this.imovel.id)
-          .then(() => this.$router.push(url));
+          .then(() => this.$router.push(urlDestino));
       }
     }    
   }

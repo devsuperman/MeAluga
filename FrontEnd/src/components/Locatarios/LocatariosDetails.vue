@@ -12,19 +12,18 @@
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0"> 
-              {{ imovel.endereco.rua }}, {{imovel.endereco.numero}}, {{imovel.endereco.bairro}}, 
-              {{imovel.endereco.complemento}}, {{imovel.endereco.cep}}
+              {{ locatario.nome }}, {{locatario.cpf}}, {{locatario.rg}}              
             </h3>            
           </div>
         </v-card-title>
       </v-card>
        
       <v-layout column align-end> 
-            <v-btn fab dark color="teal" :to="{name: 'Imoveis'}">
+            <v-btn fab dark color="teal" :to="{name: 'Locatarios'}">
               <v-icon dark>arrow_back</v-icon>
             </v-btn>
 
-            <v-btn fab dark color="pink" :to="{name: 'EditarImovel', params: {id: imovel.id}}">
+            <v-btn fab dark color="pink" :to="{name: 'EditarLocatario', params: {id: locatario.id}}">
               <v-icon dark>edit</v-icon>
             </v-btn>
 
@@ -36,10 +35,10 @@
 
      <v-dialog v-model="dialog" max-width="290">
       <v-card>
-        <v-card-title class="headline">Excluir Imóvel</v-card-title>
+        <v-card-title class="headline">Excluir Locatário</v-card-title>
 
         <v-card-text>
-          O imóvel não poderá ser recuperado! deseja continuar?
+          O locatário não poderá ser recuperado! deseja continuar?
         </v-card-text>
 
         <v-card-actions>
@@ -60,25 +59,26 @@
 </template>
 
 <script>
-import Imovel from "../../domain/imovel/Imovel";
-import ImovelService from "../../domain/imovel/ImovelService";
+import Locatario from "../../domain/locatario/Locatario";
+import LocatarioService from "../../domain/locatario/LocatarioService";
 
   export default {
     data () {
       return {   
-        imovel: new Imovel(),
+        locatario: new Locatario(),
         dialog: false        
       }
     },
     created(){
-      this.service = new ImovelService(this.$resource);      
-      this.service.buscar(this.$route.params.id).then(res => this.imovel = res);
+      this.service = new LocatarioService(this.$resource);      
+      this.service.buscar(this.$route.params.id).then(res => this.locatario = res);      
     },
     methods: {
       Excluir(){
-        var url = {name: 'Imoveis'};        
-        this.service.apagar(this.imovel.id)
-          .then(() => this.$router.push(url));
+        var urlDestino = {name: 'Locatarios'};        
+
+        this.service.apagar(this.locatario.id)
+          .then(() => this.$router.push(urlDestino));
       }
     }    
   }
