@@ -5,6 +5,17 @@ namespace MeAluga.Models
 {
     public class Aluguel
     {
+        public Aluguel()
+        {
+            
+        }
+
+        public Aluguel(DateTime vencimento, decimal valor)
+        {
+            this.Vencimento = vencimento;
+            this.Valor = valor;
+        }
+
         [Key]
         public int Id { get; set; }   
         
@@ -22,11 +33,11 @@ namespace MeAluga.Models
         
                 
         [Display(Name = "Data de Pagamento"), DataType(DataType.Date)]
-        public DateTime? DataPagamento { get; set; }
+        public DateTime? DataDePagamento { get; set; }
 
 
         [Display(Name = "Observação"), MaxLength(500)]
-        public string observacao { get; set; }
+        public string Observacao { get; set; }
 
         public Contrato Contrato {get;set;}
     }

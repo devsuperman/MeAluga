@@ -16,6 +16,7 @@ namespace MeAluga.Models
         protected  override void OnModelCreating(ModelBuilder modelBuilder)
         {            
             modelBuilder.Entity<Imovel>().OwnsOne(a => a.Endereco);
+            modelBuilder.Entity<Fiador>().OwnsOne(a => a.Endereco);
 
             // modelBuilder.Entity<Locatario>().HasData(
             //         new Locatario

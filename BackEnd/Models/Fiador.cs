@@ -1,35 +1,32 @@
-﻿using MeAluga.Extensions;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MeAluga.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeAluga.Models
 {
-    public class Locatario
+    public class Fiador
     {        
-        [Key]
-        public int Id { get; set; }
-
+        [Key, ForeignKey("Garantia")]
+        public int GarantiaId { get; set; }
 
         [Required, MaxLength(50)]
         public string Nome { get; set; }
-
         
         [Required, CPF, MaxLength(11)]
         public string CPF { get; set; }
-        
-        
-        [Required, MaxLength(20)]
+                
+        [MaxLength(20)]
         public string RG { get; set; }
         
-
         //TODO: Completar os dados do locatário
 
         [Display(Name = "Data de Registro")]
         public System.DateTime DataDeRegistro { get; set; } = System.DateTime.Now;
         
-        public ICollection<Contrato> Contratos {get;set;} = new List<Contrato>();
+        public Garantia Garantia {get;set;}
+        public Endereco Endereco { get; set; }
         
     }
 }

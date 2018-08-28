@@ -42,7 +42,7 @@
     </v-content>
     
     <v-footer :fixed="fixed" app>
-      <span> &copy; My App - 2018</span>
+      <span> &copy; MeAluga - 2018</span>
     </v-footer>
   </v-app>
 </template>

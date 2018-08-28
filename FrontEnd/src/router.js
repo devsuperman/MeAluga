@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "./components/Home/Home.vue";
+
 import Imoveis from "./components/Imoveis/Imoveis.vue";
 import ImoveisNew from "./components/Imoveis/ImoveisNew.vue";
 import ImoveisDetails from "./components/Imoveis/ImoveisDetails.vue";
