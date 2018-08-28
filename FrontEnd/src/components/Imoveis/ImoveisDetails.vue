@@ -12,8 +12,7 @@
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0"> 
-              {{ imovel.endereco.rua }}, {{imovel.endereco.numero}}, {{imovel.endereco.bairro}}, 
-              {{imovel.endereco.complemento}}, {{imovel.endereco.cep}}
+            {{endereco}}
             </h3>            
           </div>
         </v-card-title>
@@ -67,12 +66,18 @@ import ImovelService from "../../domain/imovel/ImovelService";
     data () {
       return {   
         imovel: new Imovel(),
+        endereco: '',
         dialog: false        
       }
     },
     created(){
       this.service = new ImovelService(this.$resource);      
-      this.service.buscar(this.$route.params.id).then(res => this.imovel = res);
+      this.service
+        .buscar(this.$route.params.id)
+        .then(res => {
+            this.imovel = res;
+            this.endereco = `${this.imovel.endereco.rua}, ${this.imovel.endereco.numero}, ${this.imovel.endereco.bairro}, ${this.imovel.endereco.complemento}, ${this.imovel.endereco.cep}`;      
+          });      
     },
     methods: {
       Excluir(){

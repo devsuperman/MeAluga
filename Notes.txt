@@ -1,0 +1,7 @@
+Na tela principal já deve ter um botão para criar contrato.
+Na lista de contratos também.
+
+* Criar contrato
+    - Cria Locatário ou Selecionar Locatário
+    - Seleciona Imóvel
+    - Informa período e valor

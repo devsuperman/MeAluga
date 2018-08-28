@@ -8,24 +8,21 @@
         top
         right
         color="pink"
-        :to="{name: 'CriarImovel'}"        
+        :to="{name: 'CriarContrato'}"        
       >
         <v-icon>add</v-icon>
       </v-btn>
 
         <v-data-table
             :headers="headers"
-            :items="imoveis"
+            :items="contratos"
             hide-actions
             class="elevation-1"
         >
             <template slot="items" slot-scope="props">              
               <td> 
-                <router-link :to="{name: 'DetalhesDoImovel', params:{id:props.item.id}}">
-                  {{ props.item.endereco.rua }},
-                  {{ props.item.endereco.numero }}, 
-                  {{ props.item.endereco.bairro }},  
-                  {{ props.item.endereco.complemento }} 
+                <router-link :to="{name: 'DetalhesDoContrato', params:{id:props.item.id}}">
+                  <!-- {{ props.item.endereco.rua }}                   -->
                 </router-link>
               </td>
               <td> {{ props.item.situacao }} </td>            
@@ -44,22 +41,23 @@
 
 <script>
 
-  import ImovelService from '../../domain/imovel/ImovelService';
+  import ContratoService from '../../domain/contrato/ContratoService';
 
   export default {
     data () {
       return {   
         msg: false,     
         headers: [
-          { text: 'Endereço', value: 'endereco' },
-          { text: 'Situação', value: 'situacao' }                
+          { text: 'Locatário', value: 'locatario' },
+          { text: 'Imóvel', value: 'imovel' },
+          { text: 'Situação', value: 'situacao' }
         ],
-        imoveis: []
+        contratos: []
       }
     },
     created(){
-      this.service = new ImovelService(this.$resource);      
-      this.service.listar().then(res => this.imoveis = res);
+      this.service = new ContratoService(this.$resource);      
+      this.service.listar().then(res => this.contratos = res);
     }
   }
 </script>

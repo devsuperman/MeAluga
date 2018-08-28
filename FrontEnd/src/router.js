@@ -12,6 +12,8 @@ import LocatariosNew from "./components/Locatarios/LocatariosNew.vue";
 import LocatariosDetails from "./components/Locatarios/LocatariosDetails.vue";
 import LocatariosEdit from "./components/Locatarios/LocatariosEdit.vue";
 
+import Contratos from "./components/Contratos/Contratos.vue";
+
 Vue.use(VueRouter);
 
 const routes = [  
@@ -28,7 +30,8 @@ const routes = [
     { path: '/locatarios/details/:id', component: LocatariosDetails, meta:{title: 'Locatários'}, name:'DetalhesDoLocatario'},      
     { path: '/locatarios/edit/:id', component: LocatariosEdit, meta:{title: 'Locatários'}, name: 'EditarLocatario'},      
 
-    
+    { path: '/contratos', component: Contratos, meta:{title: 'Contratos'}, name: 'Contratos'},      
+
     { path: '*', component: Home, meta:{title: 'Início'}},  
 ];
 

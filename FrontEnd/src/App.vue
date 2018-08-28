@@ -64,6 +64,11 @@ export default {
           to: '/'
         },
         {
+          icon: 'group',
+          title: 'Contratos',
+          to: '/contratos'
+        },
+        {
           icon: 'domain',
           title: 'Imóveis',
           to: '/imoveis'
@@ -72,7 +77,7 @@ export default {
           icon: 'group',
           title: 'Locatários',
           to: '/locatarios'
-        }      
+        }                 
       ]      
     }
   }
