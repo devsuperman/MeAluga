@@ -2,6 +2,8 @@
 using MeAluga.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Controllers
 {
@@ -14,55 +16,59 @@ namespace BackEnd.Controllers
         public LocatariosController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public ActionResult<IEnumerable<Locatario>> Get(string search)
+        public async Task<IActionResult> Get()
         {
-            search = (search is null ? "" : search.ToLower());
+            var lista = await db.Locatarios.ToListAsync();
 
-            var lista = db.Locatarios.Where(w => 
-                    w.Nome.ToLower().Contains(search) ||
-                    w.CPF.ToLower().Contains(search))                    
-                .ToList();
-
-            return lista;
+            return Ok(lista);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Locatario> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var model = db.Locatarios.Find(id);
+            var model = await db.Locatarios.FindAsync(id);
             
             if (model is null)
                 return NotFound();
 
-            return model;
+            return Ok(model);
         }
 
         [HttpPost]
-        public void Post([FromBody] Locatario model)
+        public async Task<IActionResult> Post([FromBody] Locatario model)
         {
             if (ModelState.IsValid)
             {
-                db.Locatarios.Add(model);
-                db.SaveChanges();
+                await db.Locatarios.AddAsync(model);
+                await db.SaveChangesAsync();   
+
+                return Created(nameof(Get), model);
             }
+
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Locatario model)
+        public async Task<IActionResult> Put(int id, [FromBody] Locatario model)
         {
             if (ModelState.IsValid)
             {
                 db.Locatarios.Update(model);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                return Accepted(model);
             }
+
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var model = db.Locatarios.Find(id);
+            var model = await db.Locatarios.FindAsync(id);
             db.Locatarios.Remove(model);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

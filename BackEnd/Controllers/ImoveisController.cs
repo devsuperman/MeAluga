@@ -2,6 +2,8 @@
 using MeAluga.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Controllers
 {
@@ -14,24 +16,17 @@ namespace BackEnd.Controllers
         public ImoveisController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public IActionResult Get(string search)
+        public async Task<IActionResult> Get()
         {
-            search = (search is null ? "" : search);
-
-            var lista = db.Imoveis.Where(w => 
-                    w.Endereco.Rua.Contains(search) ||
-                    w.Endereco.Numero.Contains(search) ||
-                    w.Endereco.Bairro.Contains(search) ||
-                    w.Endereco.Complemento.Contains(search))
-                .ToList();
+            var lista = await db.Imoveis.ToListAsync();
 
             return Ok(lista);
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var model = db.Imoveis.Find(id);
+            var model = await db.Imoveis.FindAsync(id);
             
             if (model is null)
                 return NotFound();
@@ -40,12 +35,12 @@ namespace BackEnd.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Imovel model)
+        public async Task<IActionResult> Post([FromBody] Imovel model)
         {
             if (ModelState.IsValid)
             {
-                db.Imoveis.Add(model);
-                db.SaveChanges();   
+                await db.Imoveis.AddAsync(model);
+                await db.SaveChangesAsync();   
 
                 return Created(nameof(Get), model);
             }
@@ -54,12 +49,12 @@ namespace BackEnd.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Imovel model)
+        public async Task<IActionResult> Put(int id, [FromBody] Imovel model)
         {
             if (ModelState.IsValid)
             {
                 db.Imoveis.Update(model);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return Accepted(model);
             }
 
@@ -67,11 +62,11 @@ namespace BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var model = db.Imoveis.Find(id);
+            var model = await db.Imoveis.FindAsync(id);
             db.Imoveis.Remove(model);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return NoContent();
         }
