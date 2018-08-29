@@ -29,34 +29,34 @@ namespace MeAluga.Models
         }     
 
         [Key]
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         [ForeignKey("Locatario")]
-        public int LocatarioId { get; set; }
+        public int LocatarioId { get; private set; }
 
         [ForeignKey("Imovel")]
-        public int ImovelId { get; set; }
+        public int ImovelId { get; private set; }
                 
         [Display(Name = "Data de Registro")]
-        public System.DateTime DataDeRegistro {get;set;} = System.DateTime.Now;
+        public System.DateTime DataDeRegistro {get; private set;} = System.DateTime.Now;
 
 
         [Required, Display(Name = "Início"), DataType(DataType.Date)]
-        public DateTime DataDeInicio { get; set; }
+        public DateTime DataDeInicio { get; private set; }
 
 
         [Required, Display(Name = "Término"), DataType(DataType.Date)]
-        public DateTime DataDeTermino { get; set; }
+        public DateTime DataDeTermino { get; private set; }
 
 
         [Display(Name = "Observação"), MaxLength(300)]
-        public string Observacao { get; set; }
+        public string Observacao { get; private set; }
 
 
-        public Locatario Locatario {get;set;}        
-        public Imovel Imovel {get;set;}
-        public Garantia Garantia {get;set;}
-        public ICollection<Aluguel> Alugueis {get;set;} = new List<Aluguel>();
+        public Locatario Locatario {get; private set;}        
+        public Imovel Imovel {get; private set;}
+        public Garantia Garantia {get; private set;}
+        public ICollection<Aluguel> Alugueis {get; private set;} = new List<Aluguel>();
         
         public SituacaoDeContrato Situacao(){
             
