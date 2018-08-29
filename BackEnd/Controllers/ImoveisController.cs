@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using MeAluga.Models;
+using MeAluga.ViewModels;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Controllers
@@ -18,7 +19,10 @@ namespace BackEnd.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var lista = await db.Imoveis.ToListAsync();
+            var lista = await db.Imoveis
+                .Include("Contratos")
+                .Select(imovel => new ListarImoveisViewModel(imovel))
+                .ToListAsync();
 
             return Ok(lista);
         }

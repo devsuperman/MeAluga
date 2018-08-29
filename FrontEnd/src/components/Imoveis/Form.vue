@@ -14,11 +14,11 @@
 
             <v-text-field
             v-validate="'required|max:50'"
-            v-model="imovel.endereco.rua"
+            v-model="imovel.endereco.logradouro"
             :counter="50"            
-            :error-messages="errors.collect('rua')"
-            label="Rua"
-            data-vv-name="rua"
+            :error-messages="errors.collect('logradouro')"
+            label="Logradouro"
+            data-vv-name="logradouro"
             required
             ></v-text-field>
 
@@ -113,7 +113,7 @@ import ImovelService from "../../domain/imovel/ImovelService";
       },
       LimparCampos(){
           this.imovel.endereco.cep = '';
-          this.imovel.endereco.rua = '';
+          this.imovel.endereco.logradouro = '';
           this.imovel.endereco.numero = '';
           this.imovel.endereco.bairro = '';          
           this.imovel.endereco.complemento = '';
@@ -134,7 +134,7 @@ import ImovelService from "../../domain/imovel/ImovelService";
         this.$http.get(url)
           .then(res => res.json())
           .then(endereco => {            
-            this.imovel.endereco.rua = endereco.logradouro;
+            this.imovel.endereco.logradouro = endereco.logradouro;
             this.imovel.endereco.bairro = endereco.bairro;
           });                
       }

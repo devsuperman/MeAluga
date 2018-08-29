@@ -16,6 +16,9 @@ import {
   VCard,
   VDivider,
   VDialog,
+  VSelect,
+  VDatePicker,
+  VMenu,
   transitions
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl'
@@ -37,6 +40,9 @@ Vue.use(Vuetify, {
     VCard,
     VDivider,
     VDialog,
+    VSelect,
+    VDatePicker,
+    VMenu,
     transitions
   },
   theme: {

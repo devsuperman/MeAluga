@@ -64,7 +64,7 @@ export default {
           to: '/'
         },
         {
-          icon: 'group',
+          icon: 'folder_shared',
           title: 'Contratos',
           to: '/contratos'
         },

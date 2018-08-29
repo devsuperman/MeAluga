@@ -13,7 +13,7 @@ namespace MeAluga.Models
 
         public Endereco(string rua, string numero, string bairro)
         {
-            Rua = rua;
+            Logradouro = rua;
             Numero = numero;
             Bairro = bairro;
         }
@@ -22,7 +22,7 @@ namespace MeAluga.Models
         public string CEP { get; set; }
 
         [MaxLength(50)]
-        public string Rua { get; set; }
+        public string Logradouro { get; set; }
 
         [Display(Name = "Número"), MaxLength(10)]
         public string Numero { get; set; }
@@ -41,7 +41,7 @@ namespace MeAluga.Models
         
         public override string ToString()
         {
-            return $"{Rua}, {Numero}, {Bairro}, {Complemento}, {CEP}, {Cidade} - {Estado}";
+            return $"{Logradouro}, {Numero}, {Bairro}, {Complemento}, {CEP}, {Cidade} - {Estado}";
         }
     }
 }

@@ -58,7 +58,13 @@ namespace MeAluga.Models
         public Garantia Garantia {get; private set;}
         public ICollection<Aluguel> Alugueis {get; private set;} = new List<Aluguel>();
         
-        public SituacaoDeContrato Situacao(){
+
+        public bool EmAndamento()
+        {
+            return this.Situacao() == SituacaoDeContrato.EmAndamento;
+        }
+
+        private SituacaoDeContrato Situacao(){
             
             var retorno = SituacaoDeContrato.EmAndamento;
 
@@ -86,7 +92,7 @@ namespace MeAluga.Models
 
         }
 
-         public enum SituacaoDeContrato{
+         private enum SituacaoDeContrato{
             EmAndamento,
             Encerrado
         }

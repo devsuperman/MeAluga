@@ -76,7 +76,7 @@ import ImovelService from "../../domain/imovel/ImovelService";
         .buscar(this.$route.params.id)
         .then(res => {
             this.imovel = res;
-            this.endereco = `${this.imovel.endereco.rua}, ${this.imovel.endereco.numero}, ${this.imovel.endereco.bairro}, ${this.imovel.endereco.complemento}, ${this.imovel.endereco.cep}`;      
+            this.endereco = `${this.imovel.endereco.logradouro}, ${this.imovel.endereco.numero}, ${this.imovel.endereco.bairro}, ${this.imovel.endereco.complemento}, ${this.imovel.endereco.cep}`;      
           });      
     },
     methods: {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MeAluga.Migrations
 {
-    public partial class Genesis : Migration
+    public partial class genesis : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace MeAluga.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     DataDeRegistro = table.Column<DateTime>(nullable: false),
                     Endereco_CEP = table.Column<string>(maxLength: 10, nullable: true),
-                    Endereco_Rua = table.Column<string>(maxLength: 50, nullable: true),
+                    Endereco_Logradouro = table.Column<string>(maxLength: 50, nullable: true),
                     Endereco_Numero = table.Column<string>(maxLength: 10, nullable: true),
                     Endereco_Bairro = table.Column<string>(maxLength: 50, nullable: true),
                     Endereco_Complemento = table.Column<string>(maxLength: 100, nullable: true),
@@ -126,7 +126,7 @@ namespace MeAluga.Migrations
                     RG = table.Column<string>(maxLength: 20, nullable: true),
                     DataDeRegistro = table.Column<DateTime>(nullable: false),
                     Endereco_CEP = table.Column<string>(maxLength: 10, nullable: true),
-                    Endereco_Rua = table.Column<string>(maxLength: 50, nullable: true),
+                    Endereco_Logradouro = table.Column<string>(maxLength: 50, nullable: true),
                     Endereco_Numero = table.Column<string>(maxLength: 10, nullable: true),
                     Endereco_Bairro = table.Column<string>(maxLength: 50, nullable: true),
                     Endereco_Complemento = table.Column<string>(maxLength: 100, nullable: true),

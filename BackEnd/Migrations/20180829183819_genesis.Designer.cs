@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeAluga.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20180828145524_Genesis")]
-    partial class Genesis
+    [Migration("20180829183819_genesis")]
+    partial class genesis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -187,11 +187,11 @@ namespace MeAluga.Migrations
                             b1.Property<string>("Estado")
                                 .HasMaxLength(50);
 
+                            b1.Property<string>("Logradouro")
+                                .HasMaxLength(50);
+
                             b1.Property<string>("Numero")
                                 .HasMaxLength(10);
-
-                            b1.Property<string>("Rua")
-                                .HasMaxLength(50);
 
                             b1.ToTable("Fiador");
 
@@ -231,11 +231,11 @@ namespace MeAluga.Migrations
                             b1.Property<string>("Estado")
                                 .HasMaxLength(50);
 
+                            b1.Property<string>("Logradouro")
+                                .HasMaxLength(50);
+
                             b1.Property<string>("Numero")
                                 .HasMaxLength(10);
-
-                            b1.Property<string>("Rua")
-                                .HasMaxLength(50);
 
                             b1.ToTable("Imoveis");
 

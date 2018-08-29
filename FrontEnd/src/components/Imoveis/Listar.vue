@@ -22,10 +22,7 @@
             <template slot="items" slot-scope="props">              
               <td> 
                 <router-link :to="{name: 'DetalhesDoImovel', params:{id:props.item.id}}">
-                  {{ props.item.endereco.rua }},
-                  {{ props.item.endereco.numero }}, 
-                  {{ props.item.endereco.bairro }},  
-                  {{ props.item.endereco.complemento }} 
+                  {{ props.item.endereco }}                  
                 </router-link>
               </td>
               <td> {{ props.item.situacao }} </td>            

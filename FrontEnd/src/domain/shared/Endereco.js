@@ -1,9 +1,9 @@
 export default class Endereco{
     
-    constructor(cep = '', rua = '', bairro = '', numero = '', complemento = '')
+    constructor(cep = '', logradouro = '', bairro = '', numero = '', complemento = '')
     {
         this.cep = cep;        
-        this.rua = rua;
+        this.logradouro = logradouro;
         this.bairro = bairro;
         this.numero = numero;
         this.complemento = complemento;

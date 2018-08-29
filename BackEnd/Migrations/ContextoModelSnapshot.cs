@@ -185,11 +185,11 @@ namespace MeAluga.Migrations
                             b1.Property<string>("Estado")
                                 .HasMaxLength(50);
 
+                            b1.Property<string>("Logradouro")
+                                .HasMaxLength(50);
+
                             b1.Property<string>("Numero")
                                 .HasMaxLength(10);
-
-                            b1.Property<string>("Rua")
-                                .HasMaxLength(50);
 
                             b1.ToTable("Fiador");
 
@@ -229,11 +229,11 @@ namespace MeAluga.Migrations
                             b1.Property<string>("Estado")
                                 .HasMaxLength(50);
 
+                            b1.Property<string>("Logradouro")
+                                .HasMaxLength(50);
+
                             b1.Property<string>("Numero")
                                 .HasMaxLength(10);
-
-                            b1.Property<string>("Rua")
-                                .HasMaxLength(50);
 
                             b1.ToTable("Imoveis");
 

@@ -3,5 +3,7 @@ Na lista de contratos também.
 
 * Criar contrato
     - Cria Locatário ou Selecionar Locatário
-    - Seleciona Imóvel
-    - Informa período e valor
+    - Seleciona Imóvel Disponível
+    - Informa Data de Início
+    - Radio para 6 meses ou 1 ano
+    - Valor do Aluguel

@@ -21,7 +21,9 @@ namespace BackEnd.Controllers
         {
             var lista = await db.Contratos
                 .Include("Locatario")                
-                .ToListAsync();
+                .Include("Imovel")
+                .Select(contrato => new ListarContratosViewModel(contrato))
+                .ToListAsync();            
 
             return Ok(lista);
         }
