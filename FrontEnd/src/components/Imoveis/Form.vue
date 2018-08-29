@@ -5,9 +5,9 @@
             v-validate="'required|max:8'"
             v-model="imovel.endereco.cep"
             :counter="8"
-            :error-messages="errors.collect('CEP')"
+            :error-messages="errors.collect('cep')"
             label="CEP"
-            data-vv-name="CEP"
+            data-vv-name="cep"
             required
             @input="BuscarCEP()"
             ></v-text-field>
@@ -53,7 +53,7 @@
             required
             ></v-text-field>
             
-            <v-btn fab dark color="teal" :to="{name: 'DetalhesDoImovel', params: {id: imovel.id}}">
+            <v-btn fab dark color="teal" @click="Voltar">
               <v-icon dark>arrow_back</v-icon>
             </v-btn>
 
@@ -81,14 +81,19 @@ import ImovelService from "../../domain/imovel/ImovelService";
   export default {
     data () {
       return {   
-        imovel: new Imovel()
+        imovel: new Imovel()        
       }
     },
     created(){
       
-      this.service = new ImovelService(this.$resource);          
-      this.service.buscar(this.$route.params.id)
-        .then(r => this.imovel = r);        
+      this.service = new ImovelService(this.$resource); 
+      
+      var id = this.$route.params.id;
+
+      if (id) {
+        this.service.buscar(id)
+          .then(r => this.imovel = r);                
+      }
     },
     methods:{
       Salvar(){
@@ -102,6 +107,9 @@ import ImovelService from "../../domain/imovel/ImovelService";
               });              
             }
           });
+      },
+      Voltar(){
+        history.back();
       },
       LimparCampos(){
           this.imovel.endereco.cep = '';

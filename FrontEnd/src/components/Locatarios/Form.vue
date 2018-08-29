@@ -31,7 +31,7 @@
             required
             ></v-text-field>
       
-            <v-btn fab dark color="teal" :to="{name: 'Locatarios'}">
+            <v-btn fab dark color="teal" @click="VoltarParaPaginaAnterior()">
               <v-icon dark>arrow_back</v-icon>
             </v-btn>
 
@@ -62,6 +62,13 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
     },
     created(){
       this.service = new LocatarioService(this.$resource);      
+      
+      var id = this.$route.params.id;
+
+      if (id) {
+        this.service.buscar(this.$route.params.id)
+          .then(x => this.locatario = x);                
+      }
     },
     methods:{
       Salvar(){
@@ -78,6 +85,9 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
               
             }
           });
+      },
+      VoltarParaPaginaAnterior(){
+        history.back();
       }
     }
   }
