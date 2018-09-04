@@ -5,9 +5,10 @@ export default class Contrato{
     {
         this.imovelId = '';
         this.locatarioId = '';
-        this.dataDeInicio = '';
-        this.dataDeTermino = '';
-        this.ValorDoAluguel = '';
+        // this.dataDeInicio = new Date().toLocaleDateString();        
+        this.dataDeInicio = '';  
+        this.duracao = '';
+        this.valorDoAluguel = '';
     }
 
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Localization;
 
 namespace BackEnd
 {
@@ -42,6 +43,9 @@ namespace BackEnd
             {
                 app.UseHsts();
             }
+
+            var culturaBrasileira = new RequestLocalizationOptions { DefaultRequestCulture = new RequestCulture("pt-BR") };
+            app.UseRequestLocalization(culturaBrasileira);
             
             app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 

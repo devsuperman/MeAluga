@@ -41,7 +41,7 @@ namespace MeAluga.Models
         
         public override string ToString()
         {
-            return $"{Logradouro}, {Numero}, {Bairro}, {Complemento}, {CEP}, {Cidade} - {Estado}";
+            return $"{Logradouro}, {Numero}, {Bairro}, {Complemento}, {CEP}";
         }
     }
 }

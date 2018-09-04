@@ -44,10 +44,15 @@ namespace BackEnd.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CriarContratoViewModel model)
-        {            
+        {   
+            var imovel = await db.Imoveis.Include(a => a.Contratos).SingleOrDefaultAsync(a => a.Id == model.ImovelId);
+
+            if (imovel.Alugado())            
+                ModelState.AddModelError("", "O imóvel já está alugado");            
+
             if (ModelState.IsValid)
-            {                
-                var contrato = new Contrato(model.ImovelId, model.Locatario, model.DataDeInicio, model.DataDeTermino, model.ValorDoAluguel);
+            {   
+                var contrato = new Contrato(model.ImovelId, model.LocatarioId, model.DataDeInicio, model.Duracao, model.ValorDoAluguel);
                 await db.Contratos.AddAsync(contrato);
                 await db.SaveChangesAsync();   
 

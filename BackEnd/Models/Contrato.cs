@@ -13,18 +13,18 @@ namespace MeAluga.Models
             
         }
 
-        public Contrato(int imovelId, Locatario locatario, DateTime dataDeInicio, DateTime dataDeTermino, decimal valorAluguel)
+        public Contrato(int imovelId, int locatarioId, string dataDeInicio, int duracao, decimal valorAluguel)
         {
-            this.Locatario = locatario;
-            this.ImovelId = imovelId;            
-            this.DataDeInicio = dataDeInicio;
-            this.DataDeTermino = dataDeTermino;
+            this.LocatarioId = locatarioId;
+            this.ImovelId = imovelId;                        
+            this.DataDeInicio = Convert.ToDateTime(dataDeInicio);            
             
             var datasInvalidas = (this.DataDeInicio <= this.DataDeTermino);
             
             if (datasInvalidas)            
                 throw new ValidationException("Datas inválidas!");                        
 
+            this.DataDeTermino = this.DataDeInicio.AddMonths(duracao);
             GerarAlugueis(valorAluguel);            
         }     
 
@@ -87,7 +87,8 @@ namespace MeAluga.Models
                 this.Alugueis.Add(aluguel);
 
                 diaDoMes = diaDoMes.AddMonths(1);
-                esseMesTemAluguel = (diaDoMes.PrimeiroDiaDoMes() <= this.DataDeTermino.PrimeiroDiaDoMes());
+
+                esseMesTemAluguel = (diaDoMes.PrimeiroDiaDoMes() < this.DataDeTermino.PrimeiroDiaDoMes());                
             }
 
         }

@@ -6,16 +6,17 @@ namespace MeAluga.ViewModels
 {
     public class CriarContratoViewModel
     {
-        public Locatario Locatario { get; set; }
+        [Required]
+        public int LocatarioId { get; set; }
 
         [Required]
         public int ImovelId { get; set; }
 
         [Required]
-        public DateTime DataDeInicio { get; set; }
+        public string DataDeInicio { get; set; }
 
         [Required]
-        public DateTime DataDeTermino { get; set; }
+        public int Duracao { get; set; } //Em Meses
 
         [Required]
         public decimal ValorDoAluguel { get; set; }

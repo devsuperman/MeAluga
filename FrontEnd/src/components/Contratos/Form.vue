@@ -27,8 +27,7 @@
               ref="menu"
               :close-on-content-click="false"
               v-model="menu"
-              :nudge-right="40"
-              :return-value.sync="contrato.dataDeInicio"
+              :nudge-right="40"              
               lazy
               transition="scale-transition"
               offset-y
@@ -38,20 +37,42 @@
               <v-text-field
                 v-validate="'required'"
                 :error-messages="errors.collect('contrato.dataDeInicio')"
-                label="Data de Inicio"
                 data-vv-name="contrato.dataDeInicio"                                           
+                label="Data de Início"
                 slot="activator"
-                v-model="contrato.dataDeInicio"          
-                prepend-icon="event"
+                v-model="computedDateFormatted"                        
                 readonly
               ></v-text-field>
+
               <v-date-picker 
-                v-model="contrato.dataDeInicio" 
-                @input="$refs.menu.save(FormatarData(contrato.dataDeInicio))"
+                no-title
+                v-model="date"   
                 locale="pt-br"
+                @input="menu = false"
               ></v-date-picker>
             </v-menu>            
-                          
+
+            <v-radio-group 
+              row
+              v-model="contrato.duracao" 
+              v-validate="'required'"
+              :error-messages="errors.collect('contrato.duracao')"
+              data-vv-name="contrato.duracao"                   
+            >
+              <v-radio label="6 Meses" value="6"></v-radio>
+              <v-radio label="1 Ano" value="12"></v-radio>
+            </v-radio-group>
+
+              <v-text-field
+                type='number'                
+                v-validate="'required'"
+                :error-messages="errors.collect('contrato.valorDoAluguel')"
+                data-vv-name="contrato.valorDoAluguel"                                           
+                label="Valor do Aluguel"                
+                v-model="contrato.valorDoAluguel"                          
+              ></v-text-field>
+
+
             <v-btn fab dark color="teal" @click="VoltarParaPaginaAnterior()">
               <v-icon dark>arrow_back</v-icon>
             </v-btn>
@@ -84,38 +105,49 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
         locatarios: [],
         imoveis: [],
         menu: false,
-        modal: false
-      }
+        date: null        
+        }
     },
+
     created(){
       this.contratoService = new ContratoService(this.$resource);      
       this.imovelService = new ImovelService(this.$resource);      
       this.locatarioService = new LocatarioService(this.$resource);      
       
       this.imovelService.buscar().then(x => this.imoveis = x);                
-      this.locatarioService.buscar().then(x => this.locatarios = x);                
+      this.locatarioService.buscar().then(x => this.locatarios = x);                      
+    },       
 
-      //Talvez isso não seja mais utilizado
-      // var id = this.$route.params.id;
+     computed: {
+      computedDateFormatted () {
+        return this.formatDate(this.date)
+      }
+    },
 
-      // if (id) {
-      //   this.contratoService.buscar(this.$route.params.id)
-      //     .then(x => this.contrato = x);                
-      // }
-    },    
+    watch: {
+      date (val) {        
+        this.contrato.dataDeInicio = this.formatDate(this.date);           
+      }
+    },
+
     methods:{
-      FormatarData(date){
-        if (!date) return null;
+      formatDate (date) {
+        if (!date) return null
 
-        const [year, month, day] = date.split('-');
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`
+      },
+      parseDate (date) {
+        if (!date) return null
 
-        return `${day}/${month}/${year}`;
+        const [month, day, year] = date.split('/')
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
       },
       Salvar(){
         this.$validator.validateAll().then(success => {
             
             if (success) {                            
-              
+              console.log(this.contrato);
               this.contratoService.salvar(this.contrato)
                 .then(resposta => {                  
                   var url = {name: 'DetalhesDoContrato', params: {id: resposta.body.id}};                

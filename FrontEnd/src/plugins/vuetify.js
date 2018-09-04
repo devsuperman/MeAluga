@@ -18,7 +18,8 @@ import {
   VDialog,
   VSelect,
   VDatePicker,
-  VMenu,
+  VMenu,    
+  VRadioGroup,
   transitions
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl'
@@ -42,7 +43,8 @@ Vue.use(Vuetify, {
     VDialog,
     VSelect,
     VDatePicker,
-    VMenu,
+    VMenu,    
+    VRadioGroup,    
     transitions
   },
   theme: {
