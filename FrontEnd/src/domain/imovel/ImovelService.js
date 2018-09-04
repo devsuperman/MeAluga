@@ -11,6 +11,13 @@ export default class ImovelService{
             .then(res => res.json());
     }
 
+    listarDisponiveis()
+    {
+
+        return this.Resource.query({disponivel: true})
+            .then(res => res.json());
+    }
+
     salvar(model)
     {
         if (model.id) {

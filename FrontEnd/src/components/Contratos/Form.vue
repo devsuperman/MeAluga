@@ -114,8 +114,8 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
       this.imovelService = new ImovelService(this.$resource);      
       this.locatarioService = new LocatarioService(this.$resource);      
       
-      this.imovelService.buscar().then(x => this.imoveis = x);                
-      this.locatarioService.buscar().then(x => this.locatarios = x);                      
+      this.imovelService.listarDisponiveis().then(x => this.imoveis = x);                
+      this.locatarioService.listar().then(x => this.locatarios = x);                      
     },       
 
      computed: {

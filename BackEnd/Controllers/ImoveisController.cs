@@ -17,12 +17,16 @@ namespace BackEnd.Controllers
         public ImoveisController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(bool? disponivel)
         {
-            var lista = await db.Imoveis
+            var imoveis = await db.Imoveis
                 .Include("Contratos")
-                .Select(imovel => new ListarImoveisViewModel(imovel))
                 .ToListAsync();
+            
+            if (disponivel.HasValue)            
+                imoveis = imoveis.Where(a => a.Alugado() == disponivel).ToList();
+            
+            var lista = imoveis.Select(imovel => new ListarImoveisViewModel(imovel)).ToList();
 
             return Ok(lista);
         }
