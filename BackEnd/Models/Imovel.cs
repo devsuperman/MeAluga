@@ -22,5 +22,10 @@ namespace MeAluga.Models
         {
             return this.Contratos.Any(a => a.EmAndamento());
         }
+        
+        public bool Disponivel()
+        {
+            return !this.Alugado();
+        }
     }
 }

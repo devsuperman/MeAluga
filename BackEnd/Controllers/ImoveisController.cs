@@ -24,7 +24,7 @@ namespace BackEnd.Controllers
                 .ToListAsync();
             
             if (disponivel.HasValue)            
-                imoveis = imoveis.Where(a => a.Alugado() == disponivel).ToList();
+                imoveis = imoveis.Where(a => a.Disponivel() == disponivel).ToList();
             
             var lista = imoveis.Select(imovel => new ListarImoveisViewModel(imovel)).ToList();
 
