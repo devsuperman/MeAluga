@@ -11,6 +11,7 @@ Na lista de contratos também.
 
 * Detalhes do Contrato
     - Criar/Editar Garantia
-    - Gerar Contrato
+    - Imprimir Contrato
     - Pagar Aluguel
+    - Imprimir Recibo de Aluguel
     - Encerrar Contrato
