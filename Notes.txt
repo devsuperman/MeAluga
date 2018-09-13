@@ -1,17 +1,13 @@
-Na tela principal já deve ter um botão para criar contrato.
-Na lista de contratos também.
-
-* Criar contrato
-    - Cria Locatário ou
-    X Selecionar Locatário
-    X Seleciona Imóvel Disponível
-    X Informa Data de Início
-    X Radio para 6 meses ou 1 ano
-    X Valor do Aluguel    
-
 * Detalhes do Contrato
     - Criar/Editar Garantia
     - Imprimir Contrato
     - Pagar Aluguel
     - Imprimir Recibo de Aluguel
     - Encerrar Contrato
+
+* Trocar SQlite por PGSQL
+* Na tela principal já deve ter um botão para criar contrato.
+* Na lista de contratos também.
+
+* Criar contrato
+    - Criar ou selecionar Locatário

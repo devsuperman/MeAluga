@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Localization;
 
+
 namespace BackEnd
 {
     public class Startup
@@ -19,11 +20,13 @@ namespace BackEnd
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
+        {           
+            // services.AddEntityFrameworkNpgsql()
+            //     .AddDbContext<Contexto>(options => 
+            //         options.UseNpgsql(Configuration.GetConnectionString("ElephantSQL")));
 
-            services
-                .AddDbContext<Contexto>(options => options                    
-                    .UseSqlite(Configuration.GetConnectionString("MeAlugaDB")));
+            services.AddDbContext<Contexto>(options => 
+                    options.UseSqlite(Configuration.GetConnectionString("ElephantSQL")));
 
             services
                 .AddMvc()
