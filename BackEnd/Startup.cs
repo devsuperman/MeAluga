@@ -26,7 +26,7 @@ namespace BackEnd
             //         options.UseNpgsql(Configuration.GetConnectionString("ElephantSQL")));
 
             services.AddDbContext<Contexto>(options => 
-                    options.UseSqlite(Configuration.GetConnectionString("ElephantSQL")));
+                    options.UseSqlite(Configuration.GetConnectionString("MeAlugaDB")));
 
             services
                 .AddMvc()
