@@ -20,16 +20,27 @@ namespace MeAluga.Models
         public string CPF { get; set; }
         
         
-        [Required, MaxLength(20)]
+        [MaxLength(20)]
         public string RG { get; set; }
-        
 
-        //TODO: Completar os dados do locatário
+        [MaxLength(50)]
+        public string Nacionalidade { get; set; }
+
+        [MaxLength(50)]
+        public string Profissao { get; set; }
+
+        [Required]
+        public int EstadoCivilId { get; set; }
+
+        [MaxLength(15)]
+        public string Telefone { get; set; }
+       
 
         [Display(Name = "Data de Registro")]
         public System.DateTime DataDeRegistro { get; set; } = System.DateTime.Now;
         
         public ICollection<Contrato> Contratos {get;set;} = new List<Contrato>();
+        public EstadoCivil EstadoCivil {get;set;}
         
     }
 }

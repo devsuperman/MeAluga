@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeAluga.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20180829183819_genesis")]
+    [Migration("20181026115125_genesis")]
     partial class genesis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("MeAluga.Models.Aluguel", b =>
                 {
@@ -68,6 +68,18 @@ namespace MeAluga.Migrations
                     b.HasIndex("LocatarioId");
 
                     b.ToTable("Contratos");
+                });
+
+            modelBuilder.Entity("MeAluga.Models.EstadoCivil", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descricao");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EstadosCivis");
                 });
 
             modelBuilder.Entity("MeAluga.Models.Fiador", b =>
@@ -128,15 +140,27 @@ namespace MeAluga.Migrations
 
                     b.Property<DateTime>("DataDeRegistro");
 
+                    b.Property<int>("EstadoCivilId");
+
+                    b.Property<string>("Nacionalidade")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("Profissao")
+                        .HasMaxLength(50);
+
                     b.Property<string>("RG")
-                        .IsRequired()
                         .HasMaxLength(20);
 
+                    b.Property<string>("Telefone")
+                        .HasMaxLength(15);
+
                     b.HasKey("Id");
+
+                    b.HasIndex("EstadoCivilId");
 
                     b.ToTable("Locatarios");
                 });
@@ -244,6 +268,14 @@ namespace MeAluga.Migrations
                                 .HasForeignKey("MeAluga.Models.Endereco", "ImovelId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
+                });
+
+            modelBuilder.Entity("MeAluga.Models.Locatario", b =>
+                {
+                    b.HasOne("MeAluga.Models.EstadoCivil", "EstadoCivil")
+                        .WithMany()
+                        .HasForeignKey("EstadoCivilId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

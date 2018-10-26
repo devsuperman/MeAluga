@@ -8,6 +8,19 @@ namespace MeAluga.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "EstadosCivis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Descricao = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EstadosCivis", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Imoveis",
                 columns: table => new
                 {
@@ -35,12 +48,22 @@ namespace MeAluga.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(maxLength: 50, nullable: false),
                     CPF = table.Column<string>(maxLength: 11, nullable: false),
-                    RG = table.Column<string>(maxLength: 20, nullable: false),
+                    RG = table.Column<string>(maxLength: 20, nullable: true),
+                    Nacionalidade = table.Column<string>(maxLength: 50, nullable: true),
+                    Profissao = table.Column<string>(maxLength: 50, nullable: true),
+                    EstadoCivilId = table.Column<int>(nullable: false),
+                    Telefone = table.Column<string>(maxLength: 15, nullable: true),
                     DataDeRegistro = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locatarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Locatarios_EstadosCivis_EstadoCivilId",
+                        column: x => x.EstadoCivilId,
+                        principalTable: "EstadosCivis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +181,11 @@ namespace MeAluga.Migrations
                 name: "IX_Contratos_LocatarioId",
                 table: "Contratos",
                 column: "LocatarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locatarios_EstadoCivilId",
+                table: "Locatarios",
+                column: "EstadoCivilId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -179,6 +207,9 @@ namespace MeAluga.Migrations
 
             migrationBuilder.DropTable(
                 name: "Locatarios");
+
+            migrationBuilder.DropTable(
+                name: "EstadosCivis");
         }
     }
 }

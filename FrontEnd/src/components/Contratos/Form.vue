@@ -1,6 +1,7 @@
 <template>
     <div>
         <form>
+          
             <v-select 
               v-model="contrato.locatarioId"
               :items="locatarios"
@@ -125,7 +126,7 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
     },
 
     watch: {
-      date (val) {        
+      date () {        
         this.contrato.dataDeInicio = this.formatDate(this.date);           
       }
     },
@@ -146,8 +147,7 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
       Salvar(){
         this.$validator.validateAll().then(success => {
             
-            if (success) {                            
-              console.log(this.contrato);
+            if (success) {                                          
               this.contratoService.salvar(this.contrato)
                 .then(resposta => {                  
                   var url = {name: 'DetalhesDoContrato', params: {id: resposta.body.id}};                

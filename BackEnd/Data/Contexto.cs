@@ -13,6 +13,7 @@ namespace MeAluga.Models
         public DbSet<Locatario> Locatarios  {get;set;}
         public DbSet<Imovel> Imoveis {get;set;} 
         public DbSet<Contrato> Contratos {get;set;}
+        public DbSet<EstadoCivil> EstadosCivis {get;set;}
         
         protected  override void OnModelCreating(ModelBuilder modelBuilder)
         {            

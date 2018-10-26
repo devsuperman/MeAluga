@@ -2,14 +2,14 @@ version: '2'
 
 services:
   MeAlugaAPI:
-    image: mealugaapi:latest    
+    image: backend:latest    
     ports:
       - "50:80"
     networks:
       - MeAluga-network    
 
   MeAlugaFront:
-    image: mealugafront:latest            
+    image: frontend:latest            
     ports:
       - "51:8080"
     networks:
