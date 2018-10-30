@@ -7,7 +7,7 @@ namespace MeAluga.ViewModels
     public class CriarContratoViewModel
     {
         [Required]
-        public int LocatarioId { get; set; }
+        public Locatario Locatario { get; set; }
 
         [Required]
         public int ImovelId { get; set; }

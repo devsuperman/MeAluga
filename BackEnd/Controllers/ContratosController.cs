@@ -32,14 +32,17 @@ namespace BackEnd.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var model = await db.Contratos
-                .Include("Locatario")
-                .Include("Alugueis")
+                .Include(a => a.Alugueis)                
+                .Include(a => a.Locatario)                
+                .Include(a => a.Imovel)                
                 .FirstOrDefaultAsync(x => x.Id == id);
             
             if (model is null)
                 return NotFound();
 
-            return Ok(model);
+            var viewmodel = new ContratoVM(model);
+
+            return Ok(viewmodel);
         }
 
         [HttpPost]
@@ -52,7 +55,7 @@ namespace BackEnd.Controllers
 
             if (ModelState.IsValid)
             {   
-                var contrato = new Contrato(model.ImovelId, model.LocatarioId, model.DataDeInicio, model.Duracao, model.ValorDoAluguel);
+                var contrato = new Contrato(model.ImovelId, model.Locatario, model.DataDeInicio, model.Duracao, model.ValorDoAluguel);
                 await db.Contratos.AddAsync(contrato);
                 await db.SaveChangesAsync();   
 

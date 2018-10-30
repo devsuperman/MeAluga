@@ -3,21 +3,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MeAluga.Migrations
 {
-    public partial class genesis : Migration
+    public partial class Genesis : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "EstadosCivis",
+                name: "Fiador",
                 columns: table => new
                 {
+                    Nome = table.Column<string>(maxLength: 50, nullable: false),
+                    CPF = table.Column<string>(maxLength: 11, nullable: false),
+                    RG = table.Column<string>(maxLength: 20, nullable: true),
+                    Nacionalidade = table.Column<string>(maxLength: 50, nullable: true),
+                    Profissao = table.Column<string>(maxLength: 50, nullable: true),
+                    EstadoCivil = table.Column<string>(maxLength: 50, nullable: false),
+                    Telefone = table.Column<string>(maxLength: 15, nullable: true),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Descricao = table.Column<string>(nullable: true)
+                    DataDeRegistro = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EstadosCivis", x => x.Id);
+                    table.PrimaryKey("PK_Fiador", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,26 +51,20 @@ namespace MeAluga.Migrations
                 name: "Locatarios",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(maxLength: 50, nullable: false),
                     CPF = table.Column<string>(maxLength: 11, nullable: false),
                     RG = table.Column<string>(maxLength: 20, nullable: true),
                     Nacionalidade = table.Column<string>(maxLength: 50, nullable: true),
                     Profissao = table.Column<string>(maxLength: 50, nullable: true),
-                    EstadoCivilId = table.Column<int>(nullable: false),
+                    EstadoCivil = table.Column<string>(maxLength: 50, nullable: false),
                     Telefone = table.Column<string>(maxLength: 15, nullable: true),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     DataDeRegistro = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locatarios", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Locatarios_EstadosCivis_EstadoCivilId",
-                        column: x => x.EstadoCivilId,
-                        principalTable: "EstadosCivis",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,6 +75,7 @@ namespace MeAluga.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     LocatarioId = table.Column<int>(nullable: false),
                     ImovelId = table.Column<int>(nullable: false),
+                    FiadorId = table.Column<int>(nullable: true),
                     DataDeRegistro = table.Column<DateTime>(nullable: false),
                     DataDeInicio = table.Column<DateTime>(nullable: false),
                     DataDeTermino = table.Column<DateTime>(nullable: false),
@@ -82,6 +84,12 @@ namespace MeAluga.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contratos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contratos_Fiador_FiadorId",
+                        column: x => x.FiadorId,
+                        principalTable: "Fiador",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Contratos_Imoveis_ImovelId",
                         column: x => x.ImovelId,
@@ -120,57 +128,15 @@ namespace MeAluga.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Garantia",
-                columns: table => new
-                {
-                    ContratoId = table.Column<int>(nullable: false),
-                    valorCaucao = table.Column<decimal>(nullable: true),
-                    DataDeRegistro = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Garantia", x => x.ContratoId);
-                    table.ForeignKey(
-                        name: "FK_Garantia_Contratos_ContratoId",
-                        column: x => x.ContratoId,
-                        principalTable: "Contratos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Fiador",
-                columns: table => new
-                {
-                    GarantiaId = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(maxLength: 50, nullable: false),
-                    CPF = table.Column<string>(maxLength: 11, nullable: false),
-                    RG = table.Column<string>(maxLength: 20, nullable: true),
-                    DataDeRegistro = table.Column<DateTime>(nullable: false),
-                    Endereco_CEP = table.Column<string>(maxLength: 10, nullable: true),
-                    Endereco_Logradouro = table.Column<string>(maxLength: 50, nullable: true),
-                    Endereco_Numero = table.Column<string>(maxLength: 10, nullable: true),
-                    Endereco_Bairro = table.Column<string>(maxLength: 50, nullable: true),
-                    Endereco_Complemento = table.Column<string>(maxLength: 100, nullable: true),
-                    Endereco_Cidade = table.Column<string>(maxLength: 50, nullable: true),
-                    Endereco_Estado = table.Column<string>(maxLength: 50, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fiador", x => x.GarantiaId);
-                    table.ForeignKey(
-                        name: "FK_Fiador_Garantia_GarantiaId",
-                        column: x => x.GarantiaId,
-                        principalTable: "Garantia",
-                        principalColumn: "ContratoId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Aluguel_ContratoId",
                 table: "Aluguel",
                 column: "ContratoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contratos_FiadorId",
+                table: "Contratos",
+                column: "FiadorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contratos_ImovelId",
@@ -181,11 +147,6 @@ namespace MeAluga.Migrations
                 name: "IX_Contratos_LocatarioId",
                 table: "Contratos",
                 column: "LocatarioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Locatarios_EstadoCivilId",
-                table: "Locatarios",
-                column: "EstadoCivilId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -194,22 +155,16 @@ namespace MeAluga.Migrations
                 name: "Aluguel");
 
             migrationBuilder.DropTable(
-                name: "Fiador");
-
-            migrationBuilder.DropTable(
-                name: "Garantia");
-
-            migrationBuilder.DropTable(
                 name: "Contratos");
+
+            migrationBuilder.DropTable(
+                name: "Fiador");
 
             migrationBuilder.DropTable(
                 name: "Imoveis");
 
             migrationBuilder.DropTable(
                 name: "Locatarios");
-
-            migrationBuilder.DropTable(
-                name: "EstadosCivis");
         }
     }
 }

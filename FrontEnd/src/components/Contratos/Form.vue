@@ -2,29 +2,109 @@
     <div>
         <form>
           
-            <v-select 
-              v-model="contrato.locatarioId"
-              :items="locatarios"
-              item-text="nome"
-              item-value="id"
-              v-validate="'required'"
-              :error-messages="errors.collect('contrato.locatarioId')"
-              label="Locatário"
-              data-vv-name="contrato.locatarioId"   
-            ></v-select>
+          <v-stepper v-model="step" vertical> 
+            <v-stepper-step :complete="step > 1" step="1" editable>
+              Locatário              
+            </v-stepper-step>
 
-            <v-select 
-              v-model="contrato.imovelId"
-              :items="imoveis"
-              item-text="endereco"
-              item-value="id"
-              v-validate="'required'"
-              :error-messages="errors.collect('contrato.imovelId')"
-              label="Imóvel"
-              data-vv-name="contrato.imovelId"   
-            ></v-select>
-            
-            <v-menu
+            <v-stepper-content step="1">             
+              
+              <v-text-field
+              v-validate="'required|max:50'"
+              v-model="contrato.locatario.nome"
+              :counter="50"
+              :error-messages="errors.collect('contrato.locatario.nome')"
+              label="Nome"
+              data-vv-name="contrato.locatario.nome"
+              required            
+              ></v-text-field>
+
+              <v-text-field
+              v-validate="'required|max:11'"
+              v-model="contrato.locatario.cpf"
+              :counter="11"
+              :error-messages="errors.collect('contrato.locatario.cpf')"
+              label="CPF"
+              data-vv-name="contrato.locatario.cpf"
+              required
+              ></v-text-field>
+
+              <v-text-field
+              v-validate="'max:20'"
+              v-model="contrato.locatario.rg"
+              :counter="20"
+              :error-messages="errors.collect('contrato.locatario.rg')"
+              label="RG"
+              data-vv-name="contrato.locatario.rg"
+              required
+              ></v-text-field>  
+
+              <v-text-field
+              v-validate="'max:50'"
+              v-model="contrato.locatario.profissao"
+              :counter="50"
+              :error-messages="errors.collect('contrato.locatario.profissao')"
+              label="Profissão"
+              data-vv-name="contrato.locatario.profissao"
+              required
+              ></v-text-field>  
+
+              <v-text-field
+              v-validate="'max:50'"
+              v-model="contrato.locatario.nacionalidade"
+              :counter="50"
+              :error-messages="errors.collect('contrato.locatario.nacionalidade')"
+              label="Nacionalidade"
+              data-vv-name="contrato.locatario.nacionalidade"
+              required
+              ></v-text-field>  
+
+              <v-select 
+                    v-model="contrato.locatario.EstadoCivil"
+                    :items="estadoscivis"                  
+                    v-validate="'required'"
+                    :error-messages="errors.collect('contrato.locatario.EstadoCivil')"
+                    label="Estado Civil"
+                    data-vv-name="contrato.locatario.EstadoCivil"   
+                  ></v-select>
+
+              <v-text-field
+              v-validate="'max:15'"
+              v-model="contrato.locatario.telefone"
+              :counter="15"
+              :mask="mascaraDeTelefone"
+              :error-messages="errors.collect('contrato.locatario.telefone')"
+              label="Telefone"
+              data-vv-name="contrato.locatario.telefone"
+              required
+              ></v-text-field>  
+
+              <v-btn color="primary" @click="step = 2">Próximo</v-btn>
+
+            </v-stepper-content>
+
+            <v-stepper-step :complete="step > 2" step="2" editable> Imóvel </v-stepper-step>
+
+            <v-stepper-content step="2" >              
+              <v-select 
+                v-model="contrato.imovelId"
+                :items="imoveis"
+                item-text="endereco"
+                item-value="id"
+                v-validate="'required'"
+                :error-messages="errors.collect('contrato.imovelId')"
+                label="Imóvel"
+                data-vv-name="contrato.imovelId"   
+              ></v-select>
+              <v-btn color="primary" @click="step = 3">Próximo</v-btn>
+              
+            </v-stepper-content>
+
+            <v-stepper-step :complete="step > 3" step="3" editable> Contrato </v-stepper-step>
+
+            <v-stepper-content step="3">
+              
+              <v-menu
               ref="menu"
               :close-on-content-click="false"
               v-model="menu"
@@ -73,21 +153,15 @@
                 v-model="contrato.valorDoAluguel"                          
               ></v-text-field>
 
+              <v-btn color="primary" @click="Salvar">Salvar</v-btn>
+              
+            </v-stepper-content>            
+          </v-stepper>
 
             <v-btn fab dark color="teal" @click="VoltarParaPaginaAnterior()">
               <v-icon dark>arrow_back</v-icon>
             </v-btn>
 
-            <v-btn
-              absolute
-              dark
-              fab              
-              right
-              color="pink"
-              @click="Salvar"
-            >
-              <v-icon>check</v-icon>
-            </v-btn>
         </form>
 
     </div>
@@ -95,6 +169,7 @@
 
 <script>
 import Contrato from "../../domain/contrato/Contrato";
+import Locatario from "../../domain/locatario/Locatario";
 import ContratoService from "../../domain/contrato/ContratoService";
 import ImovelService from "../../domain/imovel/ImovelService";
 import LocatarioService from "../../domain/locatario/LocatarioService";
@@ -102,11 +177,13 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
   export default {
     data () {
       return {   
-        contrato: new Contrato(),
-        locatarios: [],
+        contrato: new Contrato(),                
         imoveis: [],
         menu: false,
-        date: null        
+        date: null,
+        step: 1,
+        estadoscivis: ['Solteiro (a)','Casado (a)'],
+        mascaraDeTelefone: '(##) ##### - ####'             
         }
     },
 
@@ -143,16 +220,15 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
 
         const [month, day, year] = date.split('/')
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-      },
+      },      
       Salvar(){
-        this.$validator.validateAll().then(success => {
-            
+        console.log(this.contrato);
+        this.$validator.validateAll().then(success => {            
             if (success) {                                          
               this.contratoService.salvar(this.contrato)
                 .then(resposta => {                  
                   var url = {name: 'DetalhesDoContrato', params: {id: resposta.body.id}};                
-                  this.$router.push(url);
-                  
+                  this.$router.push(url);                                    
               });
               
             }

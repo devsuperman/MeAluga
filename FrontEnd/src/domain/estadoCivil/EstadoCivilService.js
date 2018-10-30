@@ -1,13 +1,7 @@
 export default class EstadoCivilService{
 
-    constructor(resource)
+    constructor()
     {
-        this.Resource = resource('estadosCivis{/id}');   
-    }
-
-    listar()
-    {
-        return this.Resource.query()
-            .then(res => res.json());
-    }
+        this.lista = ['Solteiro', 'Casado'];
+    }    
 }

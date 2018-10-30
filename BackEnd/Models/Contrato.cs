@@ -13,9 +13,9 @@ namespace MeAluga.Models
             
         }
 
-        public Contrato(int imovelId, int locatarioId, string dataDeInicio, int duracao, decimal valorAluguel)
+        public Contrato(int imovelId, Locatario locatario, string dataDeInicio, int duracao, decimal valorAluguel)
         {
-            this.LocatarioId = locatarioId;
+            this.Locatario = locatario;
             this.ImovelId = imovelId;                        
             this.DataDeInicio = Convert.ToDateTime(dataDeInicio);            
             
@@ -23,7 +23,7 @@ namespace MeAluga.Models
             
             if (datasInvalidas)            
                 throw new ValidationException("Datas inválidas!");                        
-
+    
             this.DataDeTermino = this.DataDeInicio.AddMonths(duracao);
             GerarAlugueis(valorAluguel);            
         }     
@@ -36,6 +36,9 @@ namespace MeAluga.Models
 
         [ForeignKey("Imovel")]
         public int ImovelId { get; private set; }
+        
+        [ForeignKey("Fiador")]
+        public int? FiadorId { get; private set; }
                 
         [Display(Name = "Data de Registro")]
         public System.DateTime DataDeRegistro {get; private set;} = System.DateTime.Now;
@@ -55,7 +58,7 @@ namespace MeAluga.Models
 
         public Locatario Locatario {get; private set;}        
         public Imovel Imovel {get; private set;}
-        public Garantia Garantia {get; private set;}
+        public Fiador Fiador {get; private set;}
         public ICollection<Aluguel> Alugueis {get; private set;} = new List<Aluguel>();
         
 

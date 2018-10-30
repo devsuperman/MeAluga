@@ -52,6 +52,8 @@ namespace MeAluga.Migrations
 
                     b.Property<DateTime>("DataDeTermino");
 
+                    b.Property<int?>("FiadorId");
+
                     b.Property<int>("ImovelId");
 
                     b.Property<int>("LocatarioId");
@@ -61,6 +63,8 @@ namespace MeAluga.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FiadorId");
+
                     b.HasIndex("ImovelId");
 
                     b.HasIndex("LocatarioId");
@@ -68,21 +72,10 @@ namespace MeAluga.Migrations
                     b.ToTable("Contratos");
                 });
 
-            modelBuilder.Entity("MeAluga.Models.EstadoCivil", b =>
+            modelBuilder.Entity("MeAluga.Models.Fiador", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Descricao");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EstadosCivis");
-                });
-
-            modelBuilder.Entity("MeAluga.Models.Fiador", b =>
-                {
-                    b.Property<int>("GarantiaId");
 
                     b.Property<string>("CPF")
                         .IsRequired()
@@ -90,29 +83,29 @@ namespace MeAluga.Migrations
 
                     b.Property<DateTime>("DataDeRegistro");
 
+                    b.Property<string>("EstadoCivil")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Nacionalidade")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Nome")
                         .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Profissao")
                         .HasMaxLength(50);
 
                     b.Property<string>("RG")
                         .HasMaxLength(20);
 
-                    b.HasKey("GarantiaId");
+                    b.Property<string>("Telefone")
+                        .HasMaxLength(15);
+
+                    b.HasKey("Id");
 
                     b.ToTable("Fiador");
-                });
-
-            modelBuilder.Entity("MeAluga.Models.Garantia", b =>
-                {
-                    b.Property<int>("ContratoId");
-
-                    b.Property<DateTime>("DataDeRegistro");
-
-                    b.Property<decimal?>("valorCaucao");
-
-                    b.HasKey("ContratoId");
-
-                    b.ToTable("Garantia");
                 });
 
             modelBuilder.Entity("MeAluga.Models.Imovel", b =>
@@ -138,7 +131,9 @@ namespace MeAluga.Migrations
 
                     b.Property<DateTime>("DataDeRegistro");
 
-                    b.Property<int>("EstadoCivilId");
+                    b.Property<string>("EstadoCivil")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("Nacionalidade")
                         .HasMaxLength(50);
@@ -158,8 +153,6 @@ namespace MeAluga.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstadoCivilId");
-
                     b.ToTable("Locatarios");
                 });
 
@@ -172,6 +165,10 @@ namespace MeAluga.Migrations
 
             modelBuilder.Entity("MeAluga.Models.Contrato", b =>
                 {
+                    b.HasOne("MeAluga.Models.Fiador", "Fiador")
+                        .WithMany()
+                        .HasForeignKey("FiadorId");
+
                     b.HasOne("MeAluga.Models.Imovel", "Imovel")
                         .WithMany("Contratos")
                         .HasForeignKey("ImovelId")
@@ -180,55 +177,6 @@ namespace MeAluga.Migrations
                     b.HasOne("MeAluga.Models.Locatario", "Locatario")
                         .WithMany("Contratos")
                         .HasForeignKey("LocatarioId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MeAluga.Models.Fiador", b =>
-                {
-                    b.HasOne("MeAluga.Models.Garantia", "Garantia")
-                        .WithOne("Fiador")
-                        .HasForeignKey("MeAluga.Models.Fiador", "GarantiaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.OwnsOne("MeAluga.Models.Endereco", "Endereco", b1 =>
-                        {
-                            b1.Property<int>("FiadorGarantiaId");
-
-                            b1.Property<string>("Bairro")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("CEP")
-                                .HasMaxLength(10);
-
-                            b1.Property<string>("Cidade")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("Complemento")
-                                .HasMaxLength(100);
-
-                            b1.Property<string>("Estado")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("Logradouro")
-                                .HasMaxLength(50);
-
-                            b1.Property<string>("Numero")
-                                .HasMaxLength(10);
-
-                            b1.ToTable("Fiador");
-
-                            b1.HasOne("MeAluga.Models.Fiador")
-                                .WithOne("Endereco")
-                                .HasForeignKey("MeAluga.Models.Endereco", "FiadorGarantiaId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-                });
-
-            modelBuilder.Entity("MeAluga.Models.Garantia", b =>
-                {
-                    b.HasOne("MeAluga.Models.Contrato", "Contrato")
-                        .WithOne("Garantia")
-                        .HasForeignKey("MeAluga.Models.Garantia", "ContratoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -266,14 +214,6 @@ namespace MeAluga.Migrations
                                 .HasForeignKey("MeAluga.Models.Endereco", "ImovelId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
-                });
-
-            modelBuilder.Entity("MeAluga.Models.Locatario", b =>
-                {
-                    b.HasOne("MeAluga.Models.EstadoCivil", "EstadoCivil")
-                        .WithMany()
-                        .HasForeignKey("EstadoCivilId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

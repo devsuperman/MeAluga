@@ -26,10 +26,10 @@ export default class ContratoService{
     //     return this.Resource.delete({id});        
     // }
 
-    // buscar(id)
-    // {
-    //     return this.Resource.get({id})
-    //     .then(res => res.json());
-    // }
+    buscar(id)
+    {
+        return this.Resource.get({id})
+        .then(res => res.json());
+    }
 
 }
