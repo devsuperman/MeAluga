@@ -40,9 +40,7 @@ namespace BackEnd.Controllers
             if (model is null)
                 return NotFound();
 
-            var viewmodel = new ContratoVM(model);
-
-            return Ok(viewmodel);
+            return Ok(model);
         }
 
         [HttpPost]
