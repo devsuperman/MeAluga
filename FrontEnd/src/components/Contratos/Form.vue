@@ -100,7 +100,7 @@
               
             </v-stepper-content>
 
-            <v-stepper-step :complete="step > 3" step="3" editable> Contrato </v-stepper-step>
+            <v-stepper-step :complete="step > 3" step="3" editable> CriarContrato </v-stepper-step>
 
             <v-stepper-content step="3">
               
@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import Contrato from "../../domain/contrato/Contrato";
+import CriarContrato from "../../domain/contrato/CriarContrato";
 import Locatario from "../../domain/locatario/Locatario";
 import ContratoService from "../../domain/contrato/ContratoService";
 import ImovelService from "../../domain/imovel/ImovelService";
@@ -177,7 +177,7 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
   export default {
     data () {
       return {   
-        contrato: new Contrato(),                
+        contrato: new CriarContrato(),                
         imoveis: [],
         menu: false,
         date: null,

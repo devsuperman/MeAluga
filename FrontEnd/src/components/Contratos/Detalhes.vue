@@ -1,30 +1,66 @@
 <template>
-  <v-layout>
-    <v-flex xs12 sm6 offset-sm3>
-      <v-card>
-        
-        <v-card-media
-          src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
-          height="200px"
-        >        
-        </v-card-media>
+  <div>
+    <v-tabs      
+      color="cyan"
+      dark
+      slider-color="yellow">
 
-        <v-card-title primary-title>
-          <div>
-            <h3 class="headline mb-0"> 
-            
-            </h3>            
-          </div>
-        </v-card-title>
-      </v-card>
+      <v-tab ripple>
+        Contrato
+      </v-tab>
+      
+      <v-tab ripple>
+        Locatário
+      </v-tab>
+
+      <v-tab ripple>
+        Aluguéis
+      </v-tab>
+
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>            
+            <dl>
+              <dt> Data de Início </dt>
+              <dd> {{ this.contrato.dataDeInicio }} </dd>
+
+              <dt> Data de Término </dt>
+              <dd> {{ this.contrato.dataDeTermino }} </dd>
+
+              <dt> Locatário </dt>
+              <dd> {{ contrato.locatario.nome }} </dd>
+            </dl>
+
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+            Locatário
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+            Aluguéis
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+      
+    </v-tabs>
+
        
-      <v-layout column align-end> 
-            <v-btn fab dark color="teal" :to="{name: 'Contratos'}">
-              <v-icon dark>arrow_back</v-icon>
-            </v-btn>            
-      </v-layout> 
-    </v-flex>
-  </v-layout>
+    <v-layout column align-end> 
+          <v-btn fab dark color="teal" :to="{name: 'Contratos'}">
+            <v-icon dark>arrow_back</v-icon>
+          </v-btn>            
+    </v-layout> 
+    
+  </div>
 </template>
 
 <script>
@@ -42,13 +78,10 @@ import ContratoService from "../../domain/contrato/ContratoService";
       
       this.service
         .buscar(this.$route.params.id)
-        .then(res => {
-            this.Contrato = res;   
-            console.log(this.contrato);         
-          });      
+        .then(res => this.contrato = res);      
     },
     methods: {
-      
+       
     }    
   }
 </script>

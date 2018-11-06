@@ -4,12 +4,22 @@ export default class Contrato{
     
     constructor()
     {
+        this.id = '';        
+        this.locatarioId = '';        
         this.imovelId = '';
-        this.locatario = '';        
+        this.fiadorId = '';
+        this.dataDeRegistro = '';  
         this.dataDeInicio = '';  
-        this.duracao = '';
-        this.valorDoAluguel = '';
-        this.locatario = new Locatario();
+        this.dataDeTermino = '';  
+        this.observacao = '';                
+        this.locatario = new Locatario();        
+        this.imovel = '';        
+        this.fiador = '';    
+        this.alugueis = [];
+    }
+
+    Situacao () {
+        return 'Em Andamento';    //TODO: Resolver isso aqui
     }
 
 }
