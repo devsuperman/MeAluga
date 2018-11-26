@@ -3,6 +3,7 @@ using MeAluga.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace MeAluga.Models
 {
@@ -54,7 +55,11 @@ namespace MeAluga.Models
 
         [Display(Name = "Observação"), MaxLength(300)]
         public string Observacao { get; private set; }
-
+        
+        public decimal Valor
+        {
+            get => (Alugueis.Any() ?  Alugueis.FirstOrDefault().Valor : 0);            
+        }
 
         public Locatario Locatario {get; private set;}        
         public Imovel Imovel {get; private set;}

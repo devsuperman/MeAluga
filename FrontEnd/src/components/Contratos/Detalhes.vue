@@ -8,46 +8,78 @@
       <v-tab ripple>
         Contrato
       </v-tab>
-      
-      <v-tab ripple>
-        Locatário
-      </v-tab>
-
+   
       <v-tab ripple>
         Aluguéis
       </v-tab>
 
       <v-tab-item>
         <v-card flat>
-          <v-card-text>            
-            <dl>
-              <dt> Data de Início </dt>
-              <dd> {{ this.contrato.dataDeInicio }} </dd>
 
-              <dt> Data de Término </dt>
-              <dd> {{ this.contrato.dataDeTermino }} </dd>
+        <v-list two-line>
+          <v-list-tile @click="IrParaDetalhesDoLocatario()">
+            <v-list-tile-action>
+              <v-icon color="indigo">person</v-icon>
+            </v-list-tile-action>
 
-              <dt> Locatário </dt>
-              <dd> {{ contrato.locatario.nome }} </dd>
-            </dl>
+            <v-list-tile-content>
+              <v-list-tile-title>{{this.contrato.locatario.nome}}</v-list-tile-title>
+              <v-list-tile-sub-title>Locatário</v-list-tile-sub-title>
+            </v-list-tile-content>            
+          </v-list-tile>
 
-          </v-card-text>
+          <v-divider inset></v-divider>
+
+           <v-list-tile>
+            <v-list-tile-action>
+              <v-icon color="indigo">home</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>{{this.contrato.imovel.enderecoCompleto}}</v-list-tile-title>
+              <v-list-tile-sub-title>Imóvel</v-list-tile-sub-title>
+            </v-list-tile-content>            
+          </v-list-tile>
+
+          <v-divider inset></v-divider>
+
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon color="indigo">date_range</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>
+                {{ new Date(this.contrato.dataDeInicio).toLocaleDateString() }}  à
+                {{ new Date(this.contrato.dataDeTermino).toLocaleDateString() }}
+              </v-list-tile-title>
+              <v-list-tile-sub-title>Vigência</v-list-tile-sub-title>
+            </v-list-tile-content>            
+          </v-list-tile>
+
+
+          <v-divider inset></v-divider>
+
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon color="indigo">attach_money</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>                
+                R${{ this.contrato.valor }}
+              </v-list-tile-title>
+              <v-list-tile-sub-title>Valor</v-list-tile-sub-title>
+            </v-list-tile-content>            
+          </v-list-tile>
+        </v-list>
+        
         </v-card>
       </v-tab-item>
-
+    
       <v-tab-item>
         <v-card flat>
-          <v-card-text>
-            Locatário
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>
-            Aluguéis
-          </v-card-text>
+          <alugueis :alugueis="contrato.alugueis"></alugueis>                      
         </v-card>
       </v-tab-item>
       
@@ -66,8 +98,12 @@
 <script>
 import Contrato from "../../domain/contrato/Contrato";
 import ContratoService from "../../domain/contrato/ContratoService";
+import Alugueis from "./Alugueis";
 
   export default {
+    components:{
+      'alugueis': Alugueis
+    },
     data () {
       return {   
         contrato: new Contrato()        
@@ -81,7 +117,10 @@ import ContratoService from "../../domain/contrato/ContratoService";
         .then(res => this.contrato = res);      
     },
     methods: {
-       
+      IrParaDetalhesDoLocatario(locatarioId)
+      {
+        this.$router.push({name: 'DetalhesDoLocatario', params:{id: this.contrato.locatarioId }});
+      }
     }    
   }
 </script>

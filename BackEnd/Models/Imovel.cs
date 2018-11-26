@@ -27,5 +27,9 @@ namespace MeAluga.Models
         {
             return !this.Alugado();
         }
+
+        public string EnderecoCompleto{
+            get => (Endereco != null ? Endereco.ToString() : "");
+        }
     }
 }
