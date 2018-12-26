@@ -1,42 +1,14 @@
 <template>
-    <div>
-
-      <v-btn
-        absolute
-        dark
-        fab
-        top
-        right
-        color="pink"
-        :to="{name: 'CriarImovel'}"        
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-
-        <v-data-table
-            :headers="headers"
-            :items="imoveis"
-            hide-actions
-            class="elevation-1"
-        >
-            <template slot="items" slot-scope="props">              
-              <td> 
-                <router-link :to="{name: 'DetalhesDoImovel', params:{id:props.item.id}}">
-                  {{ props.item.endereco }}                  
-                </router-link>
-              </td>
-              <td> {{ props.item.situacao }} </td>            
-            </template>
-
-            <template slot="no-data" slot-scope="props">              
-              <v-alert :value="true" color="error" icon="warning">
-                Desculpe, nada para mostrar aqui :(
-              </v-alert>          
-            </template>
-
-        </v-data-table>
-
-    </div>
+    
+    <ul class="collection">
+      <li class="collection-item avatar" v-for="item in imoveis" :key='item.id'>
+        <span class="title">{{item.endereco}}</span>
+        <p>
+          {{item.situacao}}          
+        </p>        
+      </li>     
+    </ul>
+    
 </template>
 
 <script>

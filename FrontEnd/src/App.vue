@@ -1,10 +1,20 @@
 <template>
   <div>
 
-     <nav class="light-blue lighten-1" role="navigation">
-      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
-        <ul class="right hide-on-med-and-down">
-          <li> <a href="#">Navbar Link</a> </li>
+     <nav class="orange darken-4" role="navigation">
+      <div class="nav-wrapper container">
+        <router-link to='/'> 
+          <a class='brand-logo'>
+            My App
+          </a>
+        </router-link>
+        
+        <ul class="right hide-on-med-and-down">          
+          <li v-for="item in items" :key='item.title'>            
+             <router-link :to="item.to">
+                {{item.title}}
+              </router-link>
+          </li>
         </ul>
 
         <ul id="nav-mobile" class="sidenav">
@@ -13,22 +23,7 @@
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       </div>
     </nav>
-    <div class="section no-pad-bot" id="index-banner">
-      <div class="container">
-        <br><br>
-        <h1 class="header center orange-text">Starter Template</h1>
-        <div class="row center">
-          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-        </div>
-        <div class="row center">
-          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-        </div>
-        <br><br>
-
-      </div>
-    </div>
-
-
+  
     <div class="container">
       <div class="section">
         <router-view></router-view> 
@@ -36,7 +31,7 @@
       <br><br>
     </div>
 
-    <footer class="page-footer orange">
+    <footer class="page-footer blue">
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
@@ -107,6 +102,11 @@ export default {
         }                 
       ]      
     }
+  },mounted: () => {
+      document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+  });
   }
 }
 </script>
