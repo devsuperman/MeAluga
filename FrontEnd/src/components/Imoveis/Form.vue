@@ -1,77 +1,29 @@
 <template>
-    <div>
-        <form>
-            <v-text-field
-            v-validate="'required|max:8'"
-            v-model="imovel.endereco.cep"
-            :counter="8"
-            :error-messages="errors.collect('cep')"
-            label="CEP"
-            data-vv-name="cep"
-            required
-            @input="BuscarCEP()"
-            ></v-text-field>
+  <div>
+    <form @submit.prevent="Salvar()">
+      
+      <div class="input-field">
+        <input id='apelido' name='apelido' type='text' class="validate" required>
+        <label for="apelido">Apelido</label>      
+      </div>        
 
-            <v-text-field
-            v-validate="'required|max:50'"
-            v-model="imovel.endereco.logradouro"
-            :counter="50"            
-            :error-messages="errors.collect('logradouro')"
-            label="Logradouro"
-            data-vv-name="logradouro"
-            required
-            ></v-text-field>
+      <div class="input-field">
+        <input id='endereco' name='endereco' type='text' class="validate" required :value='imovel.enderecoCompleto'>
+        <label for="endereco">Endereço</label>      
+      </div>        
 
-            <v-text-field
-            v-validate="'required|max:5'"
-            v-model="imovel.endereco.numero"
-            :counter="5"
-            :error-messages="errors.collect('numero')"
-            label="Número"
-            data-vv-name="numero"
-            required
-            ></v-text-field>
+      <router-link :to="{name: 'Imoveis'}">
+        <a class="btn-floating btn-large waves-effect waves-light red left">
+          <i class="material-icons">arrow_back</i>
+        </a >
+      </router-link>      
 
-            <v-text-field
-            v-validate="'required|max:50'"
-            v-model="imovel.endereco.bairro"
-            :counter="50"
-            :error-messages="errors.collect('bairro')"
-            label="Bairro"
-            data-vv-name="bairro"
-            required
-            ></v-text-field>
+      <button class="btn-floating btn-large waves-effect waves-light red right">
+        <i class="material-icons">check</i>
+      </button>
 
-
-            <v-text-field
-            v-validate="'max:50'"
-            v-model="imovel.endereco.complemento"
-            :counter="50"
-            :error-messages="errors.collect('complemento')"
-            label="Complemento"
-            data-vv-name="complemento"
-            required
-            ></v-text-field>
-            
-            <v-btn fab dark color="teal" @click="Voltar">
-              <v-icon dark>arrow_back</v-icon>
-            </v-btn>
-
-            <v-btn
-              absolute
-              dark
-              fab              
-              right
-              color="pink"
-              @click="Salvar"
-            >
-            
-              <v-icon>check</v-icon>
-            </v-btn>
-
-        </form>
-
-    </div>
+    </form>
+  </div>  
 </template>
 
 <script>
@@ -96,48 +48,13 @@ import ImovelService from "../../domain/imovel/ImovelService";
       }
     },
     methods:{
-      Salvar(){
-        this.$validator.validateAll().then(success => {
-            
-            if (success) {                                          
-              this.service.salvar(this.imovel)
-                .then(resposta => {                  
-                  var url = {name: 'DetalhesDoImovel', params: {id: resposta.body.id}};
-                  this.$router.push(url);
-              });              
-            }
-          });
-      },
-      Voltar(){
-        history.back();
-      },
-      LimparCampos(){
-          this.imovel.endereco.cep = '';
-          this.imovel.endereco.logradouro = '';
-          this.imovel.endereco.numero = '';
-          this.imovel.endereco.bairro = '';          
-          this.imovel.endereco.complemento = '';
-      },
-      BuscarCEP(){
-        if (this.imovel.endereco.cep.length < 8) {
-          return;
-        }
-        
-        var validacep = /^[0-9]{8}$/;
-
-        if (!validacep.test(this.imovel.endereco.cep)) {          
-          return; 
-        }
-
-        var url = "https://viacep.com.br/ws/" + this.imovel.endereco.cep + "/json";
-
-        this.$http.get(url)
-          .then(res => res.json())
-          .then(endereco => {            
-            this.imovel.endereco.logradouro = endereco.logradouro;
-            this.imovel.endereco.bairro = endereco.bairro;
-          });                
-      }
+      Salvar(){        
+        this.service.salvar(this.imovel)
+          .then(resposta => {                  
+            var url = {name: 'DetalhesDoImovel', params: {id: resposta.body.id}};
+            this.$router.push(url);
+        });                      
+      }     
     }  
   }
 

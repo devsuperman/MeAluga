@@ -1,12 +1,13 @@
 <template>
     
-    <ul class="collection">
-      <li class="collection-item avatar" v-for="item in imoveis" :key='item.id'>
-        <span class="title">{{item.endereco}}</span>
-        <p>
-          {{item.situacao}}          
-        </p>        
-      </li>     
+    <ul class="collection">      
+
+        <li class="collection-item" v-for="item in imoveis" :key='item.id'>
+          <router-link :to="{name: 'EditarImovel', params:{id:item.id}}">
+            {{item.endereco}} - <strong> {{item.situacao}} </strong>        
+          </router-link>  
+        </li>     
+        
     </ul>
     
 </template>
