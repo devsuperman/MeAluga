@@ -1,8 +1,8 @@
-export default class ImovelService{
+export default class ApartamentoService{
 
     constructor(resource)
     {
-        this.Resource = resource('imoveis{/id}');   
+        this.Resource = resource('apartamentos{/id}');   
     }
 
     listar()

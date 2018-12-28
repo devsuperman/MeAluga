@@ -1,6 +1,6 @@
 using System;
 
-namespace MeAluga.Extensions
+namespace API.Extensions
 {
     public static class DateTimeExtensions
     {

@@ -60,8 +60,8 @@ export default {
         },
         {
           icon: 'domain',
-          title: 'Imóveis',
-          to: '/imoveis'
+          title: 'Apartamentos',
+          to: '/apartamentos'
         },
         {
           icon: 'group',
@@ -72,11 +72,11 @@ export default {
     }
   },mounted: () => {
 
-      document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('.sidenav');
       // eslint-disable-next-line
-      var instances = M.Sidenav.init(elems);
-  });
+      var instances = M.Sidenav.init(elems);      
+    });
   }
 }
 </script>
