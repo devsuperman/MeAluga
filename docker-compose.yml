@@ -2,7 +2,7 @@ version: '2'
 
 services:
   MeAlugaAPI:
-    image: backend:latest    
+    image: API:latest    
     ports:
       - "50:80"
     networks:

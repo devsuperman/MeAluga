@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/BackEnd/MeAluga.csproj"
+                "${workspaceFolder}/API/API.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

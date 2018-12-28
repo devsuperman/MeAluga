@@ -1,8 +1,8 @@
-## BackEnd
+## API
 
 ### Enter the folder
 ```
-cd /BackEnd
+cd /API
 ```
 
 ### Run

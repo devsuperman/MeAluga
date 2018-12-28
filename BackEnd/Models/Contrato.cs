@@ -1,110 +1,82 @@
 ﻿using System;
-using MeAluga.Extensions;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using MongoDB.Bson;
+using API.Extensions;
+using System.Collections.Generic;
 
-namespace MeAluga.Models
+namespace API.Models
 {
     public partial class Contrato
-    {      
-        public Contrato()
-        {
-            
-        }
+    {   
+        private const string Duracao06Meses = "06 Meses";
+        private const string Duracao01Ano = "01 Ano";
 
-        public Contrato(int imovelId, Locatario locatario, string dataDeInicio, int duracao, decimal valorAluguel)
+        public Contrato(Apartamento apartamento, Pessoa locatario, DateTime dataDeInicio, int duracao, decimal valorAluguel)
         {
             this.Locatario = locatario;
-            this.ImovelId = imovelId;                        
-            this.DataDeInicio = Convert.ToDateTime(dataDeInicio);            
+            this.Apartamento = apartamento;                                    
+            this.DataDeInicio = dataDeInicio;            
             
-            var datasInvalidas = (this.DataDeInicio <= this.DataDeTermino);
-            
-            if (datasInvalidas)            
-                throw new ValidationException("Datas inválidas!");                        
-    
-            this.DataDeTermino = this.DataDeInicio.AddMonths(duracao);
+            //Adiciono +1 porque se não o contrato acaba no dia do vencimento do último aluguel, quando na verdade o cara ainda tem um mês pra morar
+            this.DataDePrevisaoDeEncerramento = this.DataDeInicio.AddMonths(duracao + 1); 
+
+            this.ValorDoAluguel = valorAluguel;
+            this.Duracao = (duracao == 6 ? Duracao06Meses : Duracao01Ano);
             GerarAlugueis(valorAluguel);            
         }     
-
-        [Key]
-        public int Id { get; private set; }
-
-        [ForeignKey("Locatario")]
-        public int LocatarioId { get; private set; }
-
-        [ForeignKey("Imovel")]
-        public int ImovelId { get; private set; }
         
-        [ForeignKey("Fiador")]
-        public int? FiadorId { get; private set; }
-                
-        [Display(Name = "Data de Registro")]
-        public System.DateTime DataDeRegistro {get; private set;} = System.DateTime.Now;
-
-
-        [Required, Display(Name = "Início"), DataType(DataType.Date)]
-        public DateTime DataDeInicio { get; private set; }
-
-
-        [Required, Display(Name = "Término"), DataType(DataType.Date)]
-        public DateTime DataDeTermino { get; private set; }
-
-
-        [Display(Name = "Observação"), MaxLength(300)]
-        public string Observacao { get; private set; }
+        public ObjectId Id { get; private set; }                        
+        public DateTime DataDeInicio { get; private set; }       
+        public DateTime DataDePrevisaoDeEncerramento { get; private set; }        
+        public DateTime? DataDeEncerramento { get; set; }
+        public string Observacao { get; private set; }        
+        public decimal ValorDoAluguel { get; private set; }
         
-        public decimal Valor
-        {
-            get => (Alugueis.Any() ?  Alugueis.FirstOrDefault().Valor : 0);            
-        }
-
-        public Locatario Locatario {get; private set;}        
-        public Imovel Imovel {get; private set;}
-        public Fiador Fiador {get; private set;}
-        public ICollection<Aluguel> Alugueis {get; private set;} = new List<Aluguel>();
+        public string Duracao { get; set; }
+        public Pessoa Locatario {get; private set;}        
+        public Pessoa Fiador {get; private set;}
+        public PessoaJuridica PessoaJuridica {get; private set;}        
+        public Apartamento Apartamento {get; private set;}
+        public string Situacao { get; private set; } = SituacaoDeContrato.EmAndamento;
+        public DateTime DataDeRegistro {get; private set;} = System.DateTime.Now;
+        public IList<Aluguel> Alugueis {get; private set;} = new List<Aluguel>();
         
-
-        public bool EmAndamento()
-        {
-            return this.Situacao() == SituacaoDeContrato.EmAndamento;
-        }
-
-        private SituacaoDeContrato Situacao(){
-            
-            var retorno = SituacaoDeContrato.EmAndamento;
-
-            var contratoEmAndamento = (DateTime.Today >= this.DataDeInicio && DateTime.Today <= this.DataDeTermino);            
-
-            if (!contratoEmAndamento)            
-                return SituacaoDeContrato.Encerrado;            
-
-            return retorno;
-        }
 
         private void GerarAlugueis(decimal valorAluguel)
         {
             var esseMesTemAluguel = true;
             var diaDoMes = this.DataDeInicio;
+            var ultimoMesQueTemAluguel = this.DataDePrevisaoDeEncerramento.AddMonths(-1); // O último mês de contrato em que o morador está na casa, foi pago no mês anterior
 
             while (esseMesTemAluguel)
             {
-                var aluguel = new Aluguel(diaDoMes, valorAluguel);
+                var aluguel = new Aluguel(diaDoMes);
                 this.Alugueis.Add(aluguel);
 
                 diaDoMes = diaDoMes.AddMonths(1);
 
-                esseMesTemAluguel = (diaDoMes.PrimeiroDiaDoMes() < this.DataDeTermino.PrimeiroDiaDoMes());                
+                esseMesTemAluguel = (diaDoMes.PrimeiroDiaDoMes() < ultimoMesQueTemAluguel.PrimeiroDiaDoMes());                
             }
 
         }
 
-         private enum SituacaoDeContrato{
-            EmAndamento,
-            Encerrado
+        public void Encerrar()
+        {   
+            this.Situacao = SituacaoDeContrato.Encerrado;
+            this.DataDeEncerramento = DateTime.Today;
         }
+
+        public bool PodeImprimir()
+        {            
+            var fiadorNoJeito = (this.Fiador != null) && (this.Fiador.InformacoesCompletas());
+            var locatarioNoJeito = this.Locatario.InformacoesCompletas();
+            var pessoaJuridicaNoJeito = (this.PessoaJuridica != null) && (this.PessoaJuridica.InformacoesCompletas());            
+                        
+            return fiadorNoJeito && locatarioNoJeito && pessoaJuridicaNoJeito;
+        }
+
+        public bool PodeEditar() => this.Situacao.Equals(SituacaoDeContrato.EmAndamento);
+        public bool Vencido() => (this.Situacao == SituacaoDeContrato.EmAndamento) && (this.DataDePrevisaoDeEncerramento <= DateTime.Today);
 
     }
     

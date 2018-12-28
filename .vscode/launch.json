@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/BackEnd/bin/Debug/netcoreapp2.1/MeAluga.dll",
+            "program": "${workspaceFolder}/API/bin/Debug/netcoreapp2.1/API.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/BackEnd",
+            "cwd": "${workspaceFolder}/API",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

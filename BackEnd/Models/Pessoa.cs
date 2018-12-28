@@ -1,12 +1,12 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-using MeAluga.Extensions;
+using API.Extensions;
 
-namespace MeAluga.Models
+namespace API.Models
 {    
-    public abstract class Pessoa 
-    {
-        [Required, MaxLength(50)]
+    public class Pessoa 
+    {   
+
+        [Required, MaxLength(100)]
         public string Nome { get; set; }
         
         [Required, CPF, MaxLength(11)]
@@ -16,15 +16,37 @@ namespace MeAluga.Models
         public string RG { get; set; }
 
         [MaxLength(50)]
-        public string Nacionalidade { get; set; }
+        public string Nacionalidade { get; set; } = "Brasileiro(a)";
 
-        [MaxLength(50)]
+        [MaxLength(50), Display(Name = "Profissão")]
         public string Profissao { get; set; }
 
-        [Required, MaxLength(50)]
+        [Required, MaxLength(50), Display(Name = "Estado Civil")]
         public string EstadoCivil { get; set; }
 
-        [MaxLength(15)]
+        [MaxLength(20)]
         public string Telefone { get; set; }
+      
+        public bool InformacoesCompletas()
+        {
+            var nomePreenchido = string.IsNullOrWhiteSpace(this.Nome);            
+            var cpfPreenchido = string.IsNullOrWhiteSpace(this.CPF);            
+            var rgPreenchido = string.IsNullOrWhiteSpace(this.RG);            
+            var telefonePreenchido = string.IsNullOrWhiteSpace(this.Telefone);            
+            var nacionalidadePreenchido = string.IsNullOrWhiteSpace(this.Nacionalidade);            
+            var profissaoPreenchido = string.IsNullOrWhiteSpace(this.Profissao);            
+            var estadoCivilPreenchido = string.IsNullOrWhiteSpace(this.EstadoCivil);            
+
+            var informacoesCompletas = 
+                nomePreenchido && 
+                cpfPreenchido && 
+                rgPreenchido && 
+                telefonePreenchido && 
+                nacionalidadePreenchido && 
+                profissaoPreenchido && 
+                estadoCivilPreenchido;
+
+            return informacoesCompletas;
+        }
     }
 }

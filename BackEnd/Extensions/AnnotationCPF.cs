@@ -1,12 +1,8 @@
-using System;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace MeAluga.Extensions
+namespace API.Extensions
 {
-    public class CPF : ValidationAttribute, IClientModelValidator
+    public class CPF : ValidationAttribute
     {
         public CPF()
         {
@@ -21,22 +17,7 @@ namespace MeAluga.Extensions
                 return new ValidationResult("CPF inválido");            
 
             return ValidationResult.Success;
-        }               
-
-        public void AddValidation(ClientModelValidationContext context)
-        {
-            if (context == null)            
-                throw new ArgumentNullException(nameof(context));            
-
-            MergeAttribute(context.Attributes, "data-val", "true");            
-            MergeAttribute(context.Attributes, "data-val-cpfBR", "CPF inválido merge Atribute");
-        }
-
-        private void MergeAttribute(IDictionary<string, string> attributes, string key, string value)
-        {
-            if (!attributes.ContainsKey(key))                        
-                attributes.Add(key, value);            
-        }
+        }                       
 
         public static bool CpfEhValido(string cpf)
         {            

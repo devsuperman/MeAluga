@@ -1,44 +1,34 @@
 using System;
-using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 
-namespace MeAluga.Models
+namespace API.Models
 {
     public class Aluguel
-    {
-        public Aluguel()
+    {        
+        public Aluguel(DateTime vencimento)
         {
-            
+            this.Vencimento = vencimento;        
         }
-
-        public Aluguel(DateTime vencimento, decimal valor)
-        {
-            this.Vencimento = vencimento;
-            this.Valor = valor;
-        }
-
-        [Key]
-        public int Id { get; set; }   
-        
-        [Required, Display(Name = "Vencimento"), DataType(DataType.Date)]
-        public DateTime Vencimento { get; set; }
-        
-        
-        [Required, Display(Name = "Valor"), DataType(DataType.Currency)]
-        public decimal Valor { get; set; }
-        
-        //TODO: Modelar situação do pagamento do aluguel
-        
-        [Display(Name = "Valor Pago"), DataType(DataType.Currency)]
-        public decimal? ValorPago { get; set; }
-        
                 
-        [Display(Name = "Data de Pagamento"), DataType(DataType.Date)]
-        public DateTime? DataDePagamento { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public DateTime Vencimento { get; private set; }        
+        public string Situacao { get; private set; } = SituacaoDeAluguel.EmAberto;
 
 
-        [Display(Name = "Observação"), MaxLength(500)]
-        public string Observacao { get; set; }
+        public DateTime? DataDePagamento { get; private set; }        
+        public decimal? ValorPago { get; private set; }        
+        public string Observacao { get; private set; }
 
-        public Contrato Contrato {get;set;}
+        //Não estou utilizando esse método :(
+        public void EfetuarPagamento(DateTime dataDePagamento, decimal valorPago, string observacao)
+        {
+            this.DataDePagamento = dataDePagamento;
+            this.ValorPago = valorPago;
+            this.Observacao = observacao;
+            this.Situacao = SituacaoDeAluguel.Pago;
+        }
+
+        public bool Pago() => this.DataDePagamento.HasValue;
+        public bool Vencido() => (this.Situacao == SituacaoDeAluguel.EmAberto) && (Vencimento <= DateTime.Today);
     }
 }
