@@ -22,6 +22,17 @@ namespace API.Controllers
             var lista = await db.Apartamentos.ListarTodosAsync();          
             return Ok(lista);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var model = await db.Apartamentos.FindAsync(id);          
+            
+            if (model is null)            
+                return NotFound();
+            
+            return Ok(model);
+        }
   
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ApartamentoVM viewmodel)
@@ -37,8 +48,8 @@ namespace API.Controllers
         }
 
         
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] ApartamentoVM viewmodel)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(string id, [FromBody] ApartamentoVM viewmodel)
         {                       
             if (ModelState.IsValid)
             {
