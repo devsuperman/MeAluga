@@ -18,7 +18,11 @@
         </ul>
 
         <ul id="nav-mobile" class="sidenav">
-          <li><a href="#">Navbar Link</a></li>
+          <li v-for="item in items" :key='item.title'>            
+             <router-link :to="item.to">
+                {{item.title}}
+              </router-link>
+          </li>
         </ul>
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       </div>
@@ -73,9 +77,16 @@ export default {
   },mounted: () => {
 
     document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.sidenav');
+      var $sidenav = document.querySelector('.sidenav');
       // eslint-disable-next-line
-      var instances = M.Sidenav.init(elems);      
+      var instances = M.Sidenav.init($sidenav);     
+      
+      document.addEventListener('click', function (e) {
+          if (e.target.tagName == 'A') {
+            instances.close();            
+          }
+      });
+      
     });
   }
 }

@@ -1,9 +1,22 @@
 <template>
-    
-        <form>          
-         
-        </form>
-  
+     <form @submit.prevent="Salvar()">
+      
+      <div class="input-field">
+        <input id='dataDeInicio' type='date' class="validate" required v-model='contrato.DataDeInicio'>
+        <label for="dataDeInicio" class='active'>Data de Início</label>      
+      </div>        
+      
+      <router-link :to="{name: 'Contratos'}">
+        <a class="btn-floating btn-large waves-effect waves-light red left">
+          <i class="material-icons">arrow_back</i>
+        </a >
+      </router-link>      
+
+      <button class="btn-floating btn-large waves-effect waves-light red right">
+        <i class="material-icons">check</i>
+      </button>
+
+    </form>          
 </template>
 
 <script>
@@ -15,7 +28,7 @@ import ApartamentoService from "../../domain/Apartamento/ApartamentoService";
     data () {
       return {   
         contrato: new CriarContrato(),                
-        apartamentos: [],        
+        apartamentosDesocupados: [],        
         estadoscivis: ['Solteiro (a)','Casado (a)']
         }
     },
@@ -23,7 +36,8 @@ import ApartamentoService from "../../domain/Apartamento/ApartamentoService";
     created(){
       this.contratoService = new ContratoService(this.$resource);      
       this.ApartamentoService = new ApartamentoService(this.$resource);            
-      this.ApartamentoService.listarDisponiveis().then(x => this.imoveis = x);                
+      this.ApartamentoService.listarDesocupados().then(x => this.apartamentosDesocupados = x);                
+      
     },       
     methods:{
       Salvar(){                 

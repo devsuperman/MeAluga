@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using API.Models;
 using API.Data;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -17,9 +18,13 @@ namespace API.Controllers
         public ApartamentosController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
+        public async Task<IActionResult> Get(bool? desocupado)
+        {            
             var lista = await db.Apartamentos.ListarTodosAsync();          
+
+            if (desocupado.HasValue)            
+                lista = lista.Where(w => w.Situacao == SituacaoDeApartamento.Desocupado).ToList();            
+
             return Ok(lista);
         }
 

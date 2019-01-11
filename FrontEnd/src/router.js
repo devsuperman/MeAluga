@@ -6,7 +6,7 @@ import Apartamentos from "./components/Apartamentos/Listar.vue";
 import FormApartamento from "./components/Apartamentos/Form.vue";
 
 import ListarContratos from "./components/Contratos/Listar.vue";
-import FormContrato from "./components/Contratos/Form.vue";
+import CriarContrato from "./components/Contratos/Criar.vue";
 import DetalhesDoContrato from "./components/Contratos/Detalhes.vue";
 
 Vue.use(VueRouter);
@@ -19,8 +19,8 @@ const routes = [
     { path: '/apartamentos/editar/:id', component: FormApartamento, meta:{title: 'Apartamentos'}, name: 'EditarApartamento'},      
 
     { path: '/contratos', component: ListarContratos, meta:{title: 'Contratos'}, name: 'Contratos'},      
-    { path: '/contratos/criar', component: FormContrato, meta:{title: 'Contratos'}, name: 'CriarContrato'},      
-    { path: '/contratos/detalhes/:id', component: DetalhesDoContrato, meta:{title: 'Contratos'}, name:'DetalhesDoContrato'},      
+    { path: '/contratos/criar', component: CriarContrato, meta:{title: 'Contratos'}, name: 'CriarContrato'},      
+    { path: '/contratos/detalhes/:id', component: DetalhesDoContrato, meta:{title: 'Contratos'}, name:'Contrato'},      
 
     { path: '*', component: Home, meta:{title: 'Início'}},  
 ];

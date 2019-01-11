@@ -11,10 +11,10 @@ export default class ApartamentoService{
             .then(res => res.json());
     }
 
-    listarDisponiveis()
+    listarDesocupados()
     {
 
-        return this.Resource.query({disponivel: true})
+        return this.Resource.query({desocupado: true})
             .then(res => res.json());
     }
 
