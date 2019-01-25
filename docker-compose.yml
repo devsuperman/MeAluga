@@ -1,22 +1,42 @@
-version: '2'
+version: '3'
 
 services:
-  MeAlugaAPI:
-    image: API:latest    
-    ports:
-      - "50:80"
+  db:
+    image: mongo:latest
+    container_name: db
+    ports: 
+      - "27017:27017"
+    volumes:
+      - '/home/tiago/data:/data/db'
     networks:
-      - MeAluga-network    
+      - MinhaRede
 
-  MeAlugaFront:
-    image: frontend:latest            
+  api:
+    container_name: api
+    build:
+      dockerfile: ./api.dockerfile
+      context: ./BackEnd
+    image: api:latest    
+    ports:
+      - "49459:80"
+    networks:
+      - MinhaRede   
+    depends_on:
+      - "db" 
+
+  app:
+    container_name: app
+    build:
+      dockerfile: ./app.dockerfile
+      context: ./FrontEnd
+    image: app:latest            
     ports:
       - "51:8080"
     networks:
-    - MeAluga-network
+    - MinhaRede
     depends_on:
-      - "MeAlugaAPI"
+      - "api"
 
 networks: 
-    MeAluga-network:
+    MinhaRede:
         driver: bridge

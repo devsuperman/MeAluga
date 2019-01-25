@@ -18,7 +18,7 @@
 
 <script>
 
-  import ContratoService from '../../domain/Contrato/ContratoService';
+  import ContratoService from '../../domain/contrato/ContratoService';
   
   export default {
     data () {

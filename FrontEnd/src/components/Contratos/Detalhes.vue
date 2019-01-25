@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import Contrato from "../../domain/Contrato/Contrato";
-import ContratoService from "../../domain/Contrato/ContratoService";
+import Contrato from "../../domain/contrato/Contrato";
+import ContratoService from "../../domain/contrato/ContratoService";
 
   export default {
     data () {

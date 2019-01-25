@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import Apartamento from "../../domain/Apartamento/Apartamento";
-import ApartamentoService from "../../domain/Apartamento/ApartamentoService";
+import Apartamento from "../../domain/apartamento/Apartamento";
+import ApartamentoService from "../../domain/apartamento/ApartamentoService";
 
   export default {
     data () {

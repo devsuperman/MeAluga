@@ -2,7 +2,7 @@ FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /app
 
 # Copiar csproj e restaurar dependencias
-COPY *.csproj ./
+COPY ./*.csproj ./
 RUN dotnet restore
 
 # Build da aplicacao

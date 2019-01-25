@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import CriarContrato from "../../domain/Contrato/CriarContrato";
-import ContratoService from "../../domain/Contrato/ContratoService";
-import ApartamentoService from "../../domain/Apartamento/ApartamentoService";
+import CriarContrato from "../../domain/contrato/CriarContrato";
+import ContratoService from "../../domain/contrato/ContratoService";
+import ApartamentoService from "../../domain/apartamento/ApartamentoService";
 
   export default {
     data () {
