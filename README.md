@@ -1,3 +1,2 @@
-## API
-
+## Run
 docker-compose up

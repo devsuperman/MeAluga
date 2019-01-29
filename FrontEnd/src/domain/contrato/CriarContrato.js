@@ -7,7 +7,7 @@ export default class CriarContrato{
         this.imovelId = '';
         this.locatario = '';        
         this.dataDeInicio = '';  
-        this.duracao = '';
+        this.duracao = 6;
         this.valorDoAluguel = '';
         this.locatario = new Locatario();
     }

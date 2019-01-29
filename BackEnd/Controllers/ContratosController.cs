@@ -18,9 +18,9 @@ namespace API.Controllers
         public ContratosController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, SituacaoDeContrato.EmAndamento);
+        public async Task<IActionResult> Get(string situacao = SituacaoDeContrato.EmAndamento)
+        {            
+            var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, situacao);
             var contratosEmAndamento = await db.Contratos.Find(filter).ToListAsync();
             return Ok(contratosEmAndamento);
         }
@@ -33,9 +33,9 @@ namespace API.Controllers
         // }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        public async Task<IActionResult> Get(ObjectId id)
         {
-            var model = await db.Contratos.FindAsync(id);
+            var model = await db.Contratos.FindAsync(id.ToString());
             
             if (model is null)            
                 return NotFound();   
@@ -64,25 +64,25 @@ namespace API.Controllers
             return BadRequest();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Encerrar([FromBody]string id)
-        {
-            var filtroContrato = Builders<Contrato>.Filter.Eq(a => a.Id, ObjectId.Parse(id));
-            var contrato = await db.Contratos.Find(filtroContrato).FirstAsync();            
-            var filtroApartamento = Builders<Apartamento>.Filter.Eq(a => a.Id, contrato.Apartamento.Id);
-            var apartamento = await db.Apartamentos.Find(filtroApartamento).FirstAsync();
+        // [HttpPost]
+        // public async Task<IActionResult> Encerrar([FromBody]string id)
+        // {
+        //     var filtroContrato = Builders<Contrato>.Filter.Eq(a => a.Id, ObjectId.Parse(id));
+        //     var contrato = await db.Contratos.Find(filtroContrato).FirstAsync();            
+        //     var filtroApartamento = Builders<Apartamento>.Filter.Eq(a => a.Id, contrato.Apartamento.Id);
+        //     var apartamento = await db.Apartamentos.Find(filtroApartamento).FirstAsync();
 
-            if (!contrato.PodeEditar())            
-                throw new InvalidOperationException("Este contrato já foi encerrado!");            
+        //     if (!contrato.PodeEditar())            
+        //         throw new InvalidOperationException("Este contrato já foi encerrado!");            
 
-            contrato.Encerrar();
-            apartamento.Desocupar();
+        //     contrato.Encerrar();
+        //     apartamento.Desocupar();
 
-            await db.Contratos.ReplaceOneAsync(filtroContrato, contrato);
-            await db.Apartamentos.ReplaceOneAsync(filtroApartamento, apartamento);            
+        //     await db.Contratos.ReplaceOneAsync(filtroContrato, contrato);
+        //     await db.Apartamentos.ReplaceOneAsync(filtroApartamento, apartamento);            
             
-            return Accepted(nameof(Get), contrato);            
-        }
+        //     return Accepted(nameof(Get), contrato);            
+        // }
 
         // public async Task CarregarViewBagsAsync()
         // {
