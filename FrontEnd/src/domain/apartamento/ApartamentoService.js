@@ -12,9 +12,8 @@ export default class ApartamentoService{
     }
 
     listarDesocupados()
-    {        
-        this.Resource = resource('apartamentos/desocupados');   
-        return this.Resource.query().then(res => res.json());
+    {   
+        return this.Resource.query({desocupado: true}).then(res => res.json());
     }
 
     salvar(model)

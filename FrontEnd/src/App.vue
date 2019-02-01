@@ -34,13 +34,13 @@
       <br><br>
     </div>
 
-    <footer class="page-footer light-blue darken-4">      
+    <!-- <footer class="page-footer light-blue darken-4">      
       <div class="footer-copyright">
         <div class="container">
           MyApp  - 2018
         </div>
       </div>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
@@ -78,9 +78,12 @@ export default {
     document.addEventListener('DOMContentLoaded', function() {
 
       var sidenav  = document.querySelector('.sidenav');
+      var selects = document.querySelectorAll('select');
             
       // eslint-disable-next-line
-      var sidenavInstances = M.Sidenav.init(sidenav);                 
+      var sidenavInstances = M.Sidenav.init(sidenav);           
+      // eslint-disable-next-line
+      M.FormSelect.init(selects);      
   
       document.addEventListener('click', function (e) {
           if (e.target.tagName == 'A') {

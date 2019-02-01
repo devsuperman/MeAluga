@@ -4,11 +4,10 @@ export default class CriarContrato{
     
     constructor()
     {
-        this.imovelId = '';
-        this.locatario = '';        
-        this.dataDeInicio = '';  
+        this.apartamentoId = '';              
+        this.DataDeInicio = '';  
         this.duracao = 6;
-        this.valorDoAluguel = '';
+        this.ValorDoAluguel = '';
         this.locatario = new Locatario();
     }
 
