@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:latest
+    container_name: db
+    ports: 
+      - "27017:27017"
+    volumes:
+      - '/home/tiago/data:/data/db'
+    networks:
+      - MinhaRede
+
+  # api:
+  #   container_name: api
+  #   build:
+  #     dockerfile: ./api.dockerfile
+  #     context: ./BackEnd
+  #   image: api:latest    
+  #   ports:
+  #     - "49459:80"
+  #   networks:
+  #     - MinhaRede   
+  #   depends_on:
+  #     - "db"  
+
+  # app:
+  #   container_name: app
+  #   build:
+  #     dockerfile: ./app.dockerfile
+  #     context: ./FrontEnd
+  #   image: app:latest            
+  #   ports:
+  #     - "51:8080"
+  #   networks:
+  #   - MinhaRede
+  #   depends_on:
+  #     - "api"
+
+networks: 
+    MinhaRede:
+        driver: bridge

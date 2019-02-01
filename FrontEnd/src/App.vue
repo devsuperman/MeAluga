@@ -1,6 +1,5 @@
 <template>
   <div>
-
      <nav class="orange darken-4" role="navigation">
       <div class="nav-wrapper container">
         <router-link to='/'> 
@@ -10,7 +9,7 @@
         </router-link>
         
         <ul class="right hide-on-med-and-down">          
-          <li v-for="item in items" :key='item.title'>            
+          <li v-for="item in menu" :key='item.title'>            
              <router-link :to="item.to">
                 {{item.title}}
               </router-link>
@@ -18,7 +17,7 @@
         </ul>
 
         <ul id="nav-mobile" class="sidenav">
-          <li v-for="item in items" :key='item.title'>            
+          <li v-for="item in menu" :key='item.title'>            
              <router-link :to="item.to">
                 {{item.title}}
               </router-link>
@@ -51,7 +50,7 @@ export default {
   name: 'App',
   data () {
     return {                    
-      items: [
+      menu: [
         {
           icon: 'home',
           title: 'Início',
@@ -74,20 +73,23 @@ export default {
         }                 
       ]      
     }
-  },mounted: () => {
-
+  },  
+  mounted(){
     document.addEventListener('DOMContentLoaded', function() {
-      var $sidenav = document.querySelector('.sidenav');
+
+      var sidenav  = document.querySelector('.sidenav');
+            
       // eslint-disable-next-line
-      var instances = M.Sidenav.init($sidenav);     
-      
+      var sidenavInstances = M.Sidenav.init(sidenav);                 
+  
       document.addEventListener('click', function (e) {
           if (e.target.tagName == 'A') {
-            instances.close();            
+            sidenavInstances.close();            
           }
       });
-      
-    });
+
+    });    
+    
   }
 }
 </script>

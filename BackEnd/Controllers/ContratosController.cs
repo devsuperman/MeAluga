@@ -18,9 +18,9 @@ namespace API.Controllers
         public ContratosController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, SituacaoDeContrato.EmAndamento);
+        public async Task<IActionResult> Get(string situacao = SituacaoDeContrato.EmAndamento)
+        {            
+            var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, situacao);
             var contratosEmAndamento = await db.Contratos.Find(filter).ToListAsync();
             return Ok(contratosEmAndamento);
         }
@@ -33,9 +33,9 @@ namespace API.Controllers
         // }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        public async Task<IActionResult> Get(ObjectId id)
         {
-            var model = await db.Contratos.FindAsync(id);
+            var model = await db.Contratos.FindAsync(id.ToString());
             
             if (model is null)            
                 return NotFound();   
@@ -63,6 +63,7 @@ namespace API.Controllers
 
             return BadRequest();
         }
+
 
         [HttpPost]
         [Route("[action]")]
