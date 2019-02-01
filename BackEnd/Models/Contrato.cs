@@ -40,6 +40,7 @@ namespace API.Models
         public string Situacao { get; private set; } = SituacaoDeContrato.EmAndamento;
         public DateTime DataDeRegistro {get; private set;} = System.DateTime.Now;
         public IList<Aluguel> Alugueis {get; private set;} = new List<Aluguel>();
+        public bool IgnorarNotificacoes {get;set;}
         
 
         private void GerarAlugueis(decimal valorAluguel)

@@ -1,11 +1,11 @@
-using System;
-using API.ViewModels;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using MongoDB.Driver;
+using API.ViewModels;
 using MongoDB.Bson;
-using API.Data;
 using API.Models;
+using API.Data;
+using System;
 
 namespace API.Controllers
 {
@@ -65,6 +65,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> Encerrar([FromBody]string id)
         {
             var filtroContrato = Builders<Contrato>.Filter.Eq(a => a.Id, ObjectId.Parse(id));
@@ -83,12 +84,5 @@ namespace API.Controllers
             
             return Accepted(nameof(Get), contrato);            
         }
-
-        // public async Task CarregarViewBagsAsync()
-        // {
-        //     ViewBag.ApartamentosDesocupados = await geradorDeListas.ApartamentosDesocupadosAsync();
-        //     ViewBag.EstadoCivil = geradorDeListas.EstadoCivil();
-        // }
-
     }
 }

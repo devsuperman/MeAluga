@@ -18,13 +18,9 @@ namespace API.Controllers
         public ApartamentosController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public async Task<IActionResult> Get(bool? desocupado)
+        public async Task<IActionResult> Get()
         {            
             var lista = await db.Apartamentos.ListarTodosAsync();          
-
-            if (desocupado.HasValue)            
-                lista = lista.Where(w => w.Situacao == SituacaoDeApartamento.Desocupado).ToList();            
-
             return Ok(lista);
         }
 
@@ -37,6 +33,16 @@ namespace API.Controllers
                 return NotFound();
             
             return Ok(model);
+        }
+
+        [Route("[action]")]
+        public async Task<IActionResult> Desocupados()
+        {
+             var lista = await db.Apartamentos.ListarTodosAsync();          
+
+            lista = lista.Where(w => w.Situacao == SituacaoDeApartamento.Desocupado).ToList();            
+
+            return Ok(lista);
         }
   
         [HttpPost]
