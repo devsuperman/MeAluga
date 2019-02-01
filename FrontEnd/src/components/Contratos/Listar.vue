@@ -22,13 +22,7 @@
   
   export default {
     data () {
-      return {   
-        msg: false,     
-        headers: [
-          { text: 'Locatário', value: 'locatario' },
-          { text: 'Imóvel', value: 'imovel' },
-          { text: 'Situação', value: 'situacao' }
-        ],
+      return {           
         contratos: []
       }
     },

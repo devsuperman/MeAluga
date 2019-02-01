@@ -18,24 +18,25 @@ namespace API.Controllers
         public ContratosController(Contexto db) => this.db = db;
 
         [HttpGet]
-        public async Task<IActionResult> Get(string situacao = SituacaoDeContrato.EmAndamento)
-        {            
-            var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, situacao);
+        public async Task<IActionResult> Get()
+        {   
+            var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, SituacaoDeContrato.EmAndamento);
             var contratosEmAndamento = await db.Contratos.Find(filter).ToListAsync();
             return Ok(contratosEmAndamento);
         }
 
-        // public async Task<IActionResult> Encerrados()
-        // {
-        //     var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, SituacaoDeContrato.Encerrado);
-        //     var contratosEncerrados = await db.Contratos.Find(filter).ToListAsync();
-        //     return View(contratosEncerrados);
-        // }
+        [Route("[action]")]
+        public async Task<IActionResult> Encerrados()
+        {
+            var filter = Builders<Contrato>.Filter.Eq(a => a.Situacao, SituacaoDeContrato.Encerrado);
+            var contratosEncerrados = await db.Contratos.Find(filter).ToListAsync();
+            return Ok(contratosEncerrados);
+        }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(ObjectId id)
+        public async Task<IActionResult> Get(string id)
         {
-            var model = await db.Contratos.FindAsync(id.ToString());
+            var model = await db.Contratos.FindAsync(id);
             
             if (model is null)            
                 return NotFound();   

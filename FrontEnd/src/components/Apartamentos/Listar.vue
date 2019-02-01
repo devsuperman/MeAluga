@@ -25,13 +25,7 @@
 
   export default {
     data () {
-      return {   
-        msg: false,     
-        headers: [
-          { text: 'Endereço', value: 'endereco' },
-          { text: 'Apelido', value: 'apelido' },
-          { text: 'Situação', value: 'situacao' }
-        ],
+      return {           
         apartamentos: []
       }
     },
