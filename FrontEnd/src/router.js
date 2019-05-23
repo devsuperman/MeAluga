@@ -6,8 +6,6 @@ import ListarImoveis from "./components/Imoveis/Listar.vue";
 import DetalhesDoImovel from "./components/Imoveis/Detalhes.vue";
 import FormImovel from "./components/Imoveis/Form.vue";
 
-import ListarLocatarios from "./components/Locatarios/Listar.vue";
-import DetalhesDoLocatario from "./components/Locatarios/Detalhes.vue";
 import FormLocatario from "./components/Locatarios/Form.vue";
 
 import ListarContratos from "./components/Contratos/Listar.vue";
@@ -25,8 +23,6 @@ const routes = [
     { path: '/imoveis/editar/:id', component: FormImovel, meta:{title: 'Imóvel'}, name: 'EditarImovel'},      
 
 
-    { path: '/locatarios', component: ListarLocatarios, meta:{title: 'Locatários'}, name: 'Locatarios'},          
-    { path: '/locatarios/detalhes/:id', component: DetalhesDoLocatario, meta:{title: 'Locatários'}, name:'DetalhesDoLocatario'},      
     { path: '/locatarios/criar', component: FormLocatario, meta:{title: 'Locatários'}, name: 'CriarLocatario'},      
     { path: '/locatarios/editar/:id', component: FormLocatario, meta:{title: 'Locatários'}, name: 'EditarLocatario'},      
 

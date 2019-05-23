@@ -72,12 +72,7 @@ export default {
           icon: 'domain',
           title: 'Imóveis',
           to: '/imoveis'
-        },
-        {
-          icon: 'group',
-          title: 'Locatários',
-          to: '/locatarios'
-        }                 
+        }              
       ]      
     }
   }

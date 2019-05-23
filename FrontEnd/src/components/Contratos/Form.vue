@@ -169,7 +169,6 @@
 
 <script>
 import CriarContrato from "../../domain/contrato/CriarContrato";
-import Locatario from "../../domain/locatario/Locatario";
 import ContratoService from "../../domain/contrato/ContratoService";
 import ImovelService from "../../domain/imovel/ImovelService";
 import LocatarioService from "../../domain/locatario/LocatarioService";
@@ -217,7 +216,6 @@ import LocatarioService from "../../domain/locatario/LocatarioService";
       },
       
       Salvar(){
-        console.log(this.contrato);
         this.$validator.validateAll().then(success => {            
             if (success) {                                          
               this.contratoService.salvar(this.contrato)

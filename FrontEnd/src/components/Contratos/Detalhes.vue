@@ -17,7 +17,7 @@
         <v-card flat>
 
         <v-list two-line>
-          <v-list-tile @click="IrParaDetalhesDoLocatario()">
+          <v-list-tile>
             <v-list-tile-action>
               <v-icon color="indigo">person</v-icon>
             </v-list-tile-action>
@@ -115,12 +115,6 @@ import Alugueis from "./Alugueis";
       this.service
         .buscar(this.$route.params.id)
         .then(res => this.contrato = res);      
-    },
-    methods: {
-      IrParaDetalhesDoLocatario(locatarioId)
-      {
-        this.$router.push({name: 'DetalhesDoLocatario', params:{id: this.contrato.locatarioId }});
-      }
     }    
   }
 </script>
