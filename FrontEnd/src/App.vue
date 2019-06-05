@@ -42,7 +42,7 @@
     </v-content>
     
     <v-footer :fixed="fixed" app>
-      <span> &copy; MeAluga - 2018</span>
+      <span> &copy; Tiagão Rei do Flip </span>
     </v-footer>
   </v-app>
 </template>

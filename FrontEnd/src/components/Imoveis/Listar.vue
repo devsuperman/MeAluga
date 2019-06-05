@@ -13,28 +13,30 @@
         <v-icon>add</v-icon>
       </v-btn>
 
-        <v-data-table
-            :headers="headers"
-            :items="imoveis"
-            hide-actions
-            class="elevation-1"
-        >
-            <template slot="items" slot-scope="props">              
-              <td> 
-                <router-link :to="{name: 'DetalhesDoImovel', params:{id:props.item.id}}">
-                  {{ props.item.endereco }}                  
-                </router-link>
-              </td>
-              <td> {{ props.item.situacao }} </td>            
-            </template>
+      <v-card>     
+        <v-list two-line>
+          <template v-for="(imovel, id) in imoveis">
+            
+            <v-list-tile                    
+              :key="id"
+              avatar
+              @click="$router.push({name: 'DetalhesDoImovel', params:{id: imovel.id}})"
+            >
+              <v-list-tile-avatar>
+                <v-icon>home</v-icon>
+              </v-list-tile-avatar>
 
-            <template slot="no-data" slot-scope="props">              
-              <v-alert :value="true" color="error" icon="warning">
-                Desculpe, nada para mostrar aqui :(
-              </v-alert>          
-            </template>
-
-        </v-data-table>
+              <v-list-tile-content>
+                <v-list-tile-title >
+                  {{imovel.endereco}}
+                </v-list-tile-title>
+                <v-list-tile-sub-title v-html="imovel.situacao"></v-list-tile-sub-title>
+              </v-list-tile-content>
+              
+            </v-list-tile>
+          </template>
+        </v-list>
+      </v-card>
 
     </div>
 </template>
@@ -57,7 +59,7 @@
     created(){
       this.service = new ImovelService(this.$resource);      
       this.service.listar().then(res => this.imoveis = res);
-    }
+    }   
   }
 </script>
 

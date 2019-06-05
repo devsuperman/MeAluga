@@ -13,29 +13,30 @@
         <v-icon>add</v-icon>
       </v-btn>
 
-        <v-data-table
-            :headers="headers"
-            :items="contratos"
-            hide-actions
-            class="elevation-1"
-        >
-            <template slot="items" slot-scope="props">              
-              <td> 
-                <router-link :to="{name: 'DetalhesDoContrato', params:{id:props.item.id}}">
-                  {{ props.item.locatario }}
-                </router-link>
-              </td>
-              <td> {{props.item.imovel}} </td>
-              <td> {{ props.item.situacao }} </td>            
-            </template>
+       <v-card>     
+        <v-list two-line>
+          <template v-for="(contrato, id) in contratos">
+            
+            <v-list-tile                    
+              :key="id"
+              avatar
+              @click="$router.push({name: 'DetalhesDoContrato', params: {id: contrato.id}})"
+            >
+              <v-list-tile-avatar>
+                <v-icon>home</v-icon>
+              </v-list-tile-avatar>
 
-            <template slot="no-data" slot-scope="props">              
-              <v-alert :value="true" color="error" icon="warning">
-                Desculpe, nada para mostrar aqui :(
-              </v-alert>          
-            </template>
-
-        </v-data-table>
+              <v-list-tile-content>
+                <v-list-tile-title >
+                  {{contrato.locatario}} - Contrato {{contrato.situacao}}
+                </v-list-tile-title>
+                <v-list-tile-sub-title v-html="contrato.imovel"></v-list-tile-sub-title>
+              </v-list-tile-content>
+              
+            </v-list-tile>
+          </template>
+        </v-list>
+      </v-card>
 
     </div>
 </template>
