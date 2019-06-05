@@ -1,8 +1,8 @@
-## BackEnd
+## API
 
 ### Enter the folder
 ```
-cd /BackEnd
+cd /API
 ```
 
 ### Run
@@ -10,11 +10,11 @@ cd /BackEnd
 dotnet run
 ```
 
-## FrontEnd
+## APP
 
 ### Enter the folder
 ```
-cd /FrontEnd
+cd /APP
 ```
 
 ## Project setup

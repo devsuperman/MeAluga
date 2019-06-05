@@ -1,22 +1,22 @@
-version: '2'
+version: '3'
 
 services:
-  MeAlugaAPI:
-    image: backend:latest    
+  API:
+    build: ./API
     ports:
       - "50:80"
     networks:
-      - MeAluga-network    
+      - RedeTop    
 
-  MeAlugaFront:
-    image: frontend:latest            
+  APP:
+    build: ./APP
     ports:
       - "51:8080"
     networks:
-    - MeAluga-network
+    - RedeTop
     depends_on:
-      - "MeAlugaAPI"
+      - "API"
 
 networks: 
-    MeAluga-network:
+    RedeTop:
         driver: bridge
