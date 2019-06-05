@@ -1,21 +1,21 @@
 version: '3'
 
 services:
-  API:
+  apimealuga:
     build: ./API
     ports:
       - "50:80"
     networks:
       - RedeTop    
 
-  APP:
+  appmealuga:
     build: ./APP
     ports:
       - "51:8080"
     networks:
     - RedeTop
     depends_on:
-      - "API"
+      - "apimealuga"
 
 networks: 
     RedeTop:
